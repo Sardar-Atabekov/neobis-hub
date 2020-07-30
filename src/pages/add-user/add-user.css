@@ -1,0 +1,12 @@
+.add-user {
+    width: 400px;
+    /* display: grid;
+    grid-template-columns: 1fr 1fr;
+    grid-gap: 1vw; */
+    padding-top: 40px;
+    font-family: 'Montserrat-Medium';
+}
+/* 
+.add-user .form-group {
+    width: 50%;
+} */

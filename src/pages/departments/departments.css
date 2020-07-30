@@ -1,0 +1,34 @@
+.department {
+    display: flex;
+    background: #115EF8;
+    border-radius: 10px;
+    width: 380px;
+    padding: 15px;
+    color: #fff;
+    margin-bottom: 3px;
+    font-family: 'Montserrat-medium';
+}
+
+.department:hover {
+    color: #FFF;
+}
+
+.bgDepartment {
+    height: 160px;
+}
+
+.counts-department {
+    margin-top: 5px;
+}
+
+.icon-block {
+    background: #FFFFFF;
+    border-radius: 10px;
+    width: 40px;
+    padding: 5px;
+    margin-bottom: 10px;
+}
+
+.mentor_count {
+    margin-right: 10px;
+}

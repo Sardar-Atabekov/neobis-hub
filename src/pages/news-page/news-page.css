@@ -1,0 +1,12 @@
+.news-block {
+    width: 320px;
+    border-radius: 5px;
+}
+
+.news-title {
+    font-family: Montserrat;
+    font-weight: 600;
+    font-size: 18px;
+    line-height: 24px;
+    padding: 10px 0;
+}

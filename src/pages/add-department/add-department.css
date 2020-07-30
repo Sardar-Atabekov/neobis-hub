@@ -1,0 +1,48 @@
+.add-department {
+    width: 30%;
+    margin-top: 20px;
+    font-family: 'Montserrat-Medium';
+}
+
+
+
+.add-department .name {
+    display: flex;
+    flex-direction: column;
+    margin: 20px 0;
+}
+
+.new-department-title-block {
+    display: flex;
+    align-items: center;
+}
+
+.download-icon {
+    display: flex;
+    flex-direction: column;
+    width: 240px;
+    /* padding: 20px;
+    margin-left: 20px; */
+}
+
+.download-icon img {
+    width: 200px;
+    margin: 20px;
+    margin-left: 40px;
+}
+
+.download-icon .download-text {
+    border: 1px solid rgba(0, 0, 0, 0.5);
+    box-sizing: border-box;
+    border-radius: 5px;
+    width: 289px;
+    text-align: center;
+    padding: 8px;
+}
+
+.new-department-title {
+    font-size: 20px;
+    line-height: 24px;
+    display: flex;
+    text-transform: uppercase;
+}

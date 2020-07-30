@@ -1,0 +1,43 @@
+.serchNavbar {
+    display: flex;
+    width: 100%;
+    background: #fff;
+    justify-content: flex-end;
+    box-shadow: 0 0.125rem 0.625rem rgba(90, 97, 105, .12);
+}
+
+.bell,
+.profileImage {
+    width: 60px;
+    height: 60px;
+    text-align: center;
+    padding-top: 12px;
+    border: #e4e4e4 solid 1px;
+    cursor: pointer;
+}
+
+.profileImage {
+    margin-right: 2px;
+}
+
+.main-search {
+    width: 100% !important;
+}
+
+.navigationComponent .categories {
+    color: #3d5170;
+}
+
+.serchNavbar .input {
+    height: 60px;
+    width: 100%;
+}
+
+.serchNavbar .navbar-search {
+    height: 60px;
+    margin: 0px;
+    width: 100%;
+    padding: 5px 20px;
+    margin-left: 20px;
+    border: none;
+}

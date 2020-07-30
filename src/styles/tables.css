@@ -1,0 +1,105 @@
+.tables {
+    background: #fff;
+    box-shadow: 0 2px 0 rgba(90, 97, 105, .11), 0 4px 8px rgba(90, 97, 105, .12), 0 10px 10px rgba(90, 97, 105, .06), 0 7px 70px rgba(90, 97, 105, .1);
+    border-radius: .625rem;
+}
+
+.thead-item {
+    height: 50px;
+    background: var(--mainColor);
+    text-align: center;
+    font-family: "Montserrat-medium";
+    border-right: 1px solid #E8E8E8;
+    border-bottom: none !important;
+    border-top: none !important;
+    color: #fff;
+    font-size: 16px;
+}
+
+.tbody-item {
+    background: #fff;
+    color: #000;
+    text-align: center;
+    font-size: 16px;
+    font-family: "Montserrat-medium";
+    border: 1px solid #E8E8E8;
+}
+
+.item-delete {
+    color: #D71B0F;
+    cursor: pointer;
+    text-align: center;
+    font-size: 16px;
+}
+
+table.table-3 {
+    border-collapse: collapse;
+    border-spacing: 0;
+    width: 100%;
+}
+
+.table thead th {
+    vertical-align: inherit;
+}
+
+table.table-3 tr {
+    background-color: #f8f8f8;
+}
+
+table.table-3 th,
+table.table-3 td {
+    border: 1px solid #ddd;
+}
+
+@media screen and (max-width: 900px) {
+
+    table.table-3 th,
+    table.table-3 td {
+        padding: 8px;
+    }
+
+    .tbody-item {
+        border: 1px solid var(--mainColor) !important;
+    }
+
+    .item-delete,
+    .item-more {
+        justify-content: center !important;
+    }
+
+    table.table-3 {
+        border: 0;
+    }
+
+    table.table-3 thead {
+        border: none;
+        clip: rect(0 0 0 0);
+        height: 1px;
+        margin: -1px;
+        overflow: hidden;
+        padding: 0;
+        position: absolute;
+        width: 1px;
+    }
+
+    table.table-3 tr {
+        display: block;
+        padding: 5px;
+        background: var(--mainColor) !important;
+        margin-bottom: 25px;
+    }
+
+    table.table-3 td {
+        display: flex;
+        justify-content: space-between;
+    }
+
+    table.table-3 td::before {
+        content: attr(data-th);
+        float: left;
+    }
+
+    table.table-3 td:last-child {
+        border-bottom: 0;
+    }
+}

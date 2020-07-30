@@ -1,0 +1,42 @@
+.titleStyle {
+    letter-spacing: 0.05em;
+    font-family: 'Montserrat-medium';
+    font-weight: 600;
+    font-size: 24px;
+    line-height: 24px;
+    padding-bottom: 15px;
+    color: var(--mainColor);
+    display: flex;
+    justify-content: space-between;
+}
+
+.line {
+    border-bottom: 1.5px solid rgba(0, 0, 0, 0.2);
+}
+
+.title-block {
+    max-height: 300px;
+}
+
+@media only screen and (max-width: 600px) {
+    .titleStyle {
+        font-size: 40px;
+        line-height: 45px;
+    }
+
+    .line {
+        border-bottom: 4px solid var(--mainColor);
+    }
+}
+
+@media only screen and (max-width: 414px) {
+    .titleStyle {
+        font-size: 33px;
+    }
+}
+
+@media only screen and (max-width: 360px) {
+    .titleStyle {
+        font-size: 26px;
+    }
+}
