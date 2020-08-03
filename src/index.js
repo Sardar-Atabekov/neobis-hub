@@ -4,6 +4,7 @@ import "bootstrap/dist/css/bootstrap.css";
 import * as serviceWorker from "./serviceWorker";
 // import * as Sentry from "@sentry/browser";
 import App from "./App";
+import "./styles/dataPicker.css";
 import "./styles/common.css";
 import "./styles/tables.css";
 import "./index.css";

@@ -5,6 +5,7 @@
      width: 380px;
      padding: 14px;
      margin-bottom: 18px;
+     color: black;
  }
 
  .project-block {
@@ -55,7 +56,7 @@
 
  }
 
- .project .a {
+ .project .a, .project-info .a {
      color: #E40E00;
      background: rgba(228, 14, 0, 0.1);
  }

@@ -5,6 +5,7 @@ import Title from "./../../components/title/title";
 import pmIcon from "./../../assets/icons/pmIcon.svg";
 import truckIcon from "./../../assets/icons/truck.svg";
 import AddBtn from "./../../components/buttons/add-btn";
+import { Link } from "react-router-dom";
 
 
 import "./projects.css";
@@ -34,7 +35,7 @@ const ProjectsPage = () => {
                 loading ? <div className="grid">
                     {
                         projects.map(project =>
-                            <div className="project" key={project.id}>
+                            <Link to={`/project/${project.id}`} key={project.id}><div className="project">
                                 <div className="flex-start project-block">
                                     <img src={truckIcon} alt="Cargo truck" className="projectIcon" />
                                     <div className="project-description text-left">
@@ -51,7 +52,8 @@ const ProjectsPage = () => {
                                     </span>
                                 </div>
                                 <div className="line-status"></div>
-                            </div>
+                            </div></Link>
+
                         )
                     }
                 </div> : <Loading />

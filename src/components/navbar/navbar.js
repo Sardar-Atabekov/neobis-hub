@@ -2,7 +2,7 @@ import React, { useEffect } from "react";
 import { Link } from "react-router-dom";
 import neobisLogo from "./../../assets/logo/logo.svg";
 import peopleImg from "./../../assets/img/people.png";
-import userIcon from "./../../assets/navbar-icon/user.svg"
+import userIcon from "./../../assets/navbar-icon/user.svg";
 import newsIcon from "./../../assets/navbar-icon/news 2.svg";
 import usersIcon from "./../../assets/navbar-icon/users 1.svg";
 import projectIcon from "./../../assets/navbar-icon/layers 1.svg";
@@ -34,6 +34,7 @@ const NavBar = () => {
     });
   };
 
+  let id = JSON.parse(localStorage.getItem("neobisHUBDate")).user_id -1;
   return (
     <nav className="navigationComponent text-left">
       <Link to={"/departments/"}>
@@ -43,7 +44,7 @@ const NavBar = () => {
         <img src={newsIcon} alt="newsIcon" />
         Новости
       </Link>
-      <Link to={"/projects/"} className="categories">
+      <Link to={`/user/${id}`} className="categories">
         <img src={userIcon} alt="newsIcon" />
         Личный кабинет
       </Link>
@@ -64,13 +65,15 @@ const NavBar = () => {
       </div>
 
       <div className="quote-block">
-        <span>«Чтобы понять код мидла, нужно быть мидлом. Чтобы понять код сеньора, достаточно быть джуном».</span>
+        <span>
+          «Чтобы понять код мидла, нужно быть мидлом. Чтобы понять код сеньора,
+          достаточно быть джуном».
+        </span>
         <img src={peopleImg} alt="peopleImg" />
       </div>
     </nav>
   );
 };
-
 
 // const Category = ({ children }) => {
 //   return (

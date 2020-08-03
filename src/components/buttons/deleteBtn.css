@@ -1,0 +1,22 @@
+.delete-btn-block {
+    font-family: 'Roboto';
+    font-weight: bold;
+    font-size: 16px;
+    line-height: 19px;
+    text-transform: uppercase;
+    color: rgba(0, 0, 0, 0.8);
+    border: 1px solid rgba(0, 0, 0, 0.5);
+    box-sizing: border-box;
+    border-radius: 5px;
+    background: #E5E5E5;
+    padding: 8px 40px;
+    height: 42px;
+    padding-top: 10px;
+    margin: 10px 0 25px 0;
+}
+
+.button-block {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}

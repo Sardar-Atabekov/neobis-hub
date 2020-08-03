@@ -30,10 +30,10 @@ const DepartmentPage = (props) => {
     return (
         <div className="wrapper">
             {
-                loading ? <><Title>{department.name} департамент</Title>
+                loading ? <><Title link={`/edit-department/${department.id}`}>{department.name} департамент</Title>
                     <div>
                         <div className="mt-4 mb-5">
-                            <img className="departmentIcon mb-3" src={PythonIcon} alt="PythonIcon" />
+                            <img className="departmentIcon mb-3" src={department.logo} alt="PythonIcon" />
                             <h4 className="department-name">{department.name} департамент</h4>
                             <div className="d-flex mt-3">
                                 <div className="head-block">
@@ -44,7 +44,6 @@ const DepartmentPage = (props) => {
                                     <span>{department.count} человек</span>
                                     <div className="counts">
                                         <span className="mr-5">Менторы: {department.mentor_count} </span>
-                                        <span>Мемберы: {department.count - department.mentor_count} </span>
                                     </div>
                                 </div>
                             </div>

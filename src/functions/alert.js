@@ -27,7 +27,7 @@ function confirmAlert(title) {
   }).then((result) => {
     if (result.value) {
       setTimeout(() => {
-        window.location.href = "https://tele.gg/ZigmundOnline_bot";
+        window.location.href = "https://neobis.kg/";
       }, 1000);
     }
   });
@@ -64,7 +64,7 @@ function confirmAlert(title) {
 //     }
 //   );
 // };
-const deleteAlert = (title, subTitle, url, okFunction) => {
+const deleteAlert = (title, subTitle, url, toUrl, props) => {
   Swal.fire({
     title: title,
     icon: "warning",
@@ -78,11 +78,12 @@ const deleteAlert = (title, subTitle, url, okFunction) => {
       deleteData(url).then((res) => {
         if (res.ok) {
           Alert(subTitle);
-          okFunction();
+          console.log("props", props);
+          setTimeout(() => props.history.push(toUrl), 1000);
         } else if (res.status === 403) {
           Alert("У вас нет прав для выполнения этой операции", "error");
         } else {
-          Alert("Повторите попытку", "error");
+          confirmAlert("Ошибка сервера. Напишите нам, мы всё починим.");
         }
       });
     }

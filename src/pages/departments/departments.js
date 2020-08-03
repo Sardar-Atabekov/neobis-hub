@@ -1,10 +1,9 @@
 import React, { useEffect, useState } from "react";
 import { getData } from "../../functions/requests";
 import Title from "./../../components/title/title";
-import PythonImg from "./../../assets/img/python.png";
+import bgImg from "./../../assets/img/Group 77 (1).png";
 import Loading from "../../components/loading/loading";
 import AddBtn from "./../../components/buttons/add-btn";
-import PythonIcon from "./../../assets/icons/python.svg";
 import { Link } from "react-router-dom";
 import "./departments.css";
 // import { Table } from "reactstrap";
@@ -37,16 +36,15 @@ const DepartmentsPage = () => {
                                 <Link className="department" key={department.id} to={`/department/${department.id}`}>
                                     <div>
                                         <div className="icon-block">
-                                            <img src={PythonIcon} alt="PythonIcon" />
+                                            <img src={department.logo} alt="PythonIcon" />
                                         </div>
                                         <h4>{department.name} department</h4>
                                         <span>{department.count} человек</span>
                                         <div className="counts-department">
                                             <span className="mentor_count">Менторы: {department.mentor_count}</span>
-                                            <span>Мемберы: {department.count - department.mentor_count}</span>
                                         </div>
                                     </div>
-                                    <img src={PythonImg} alt="PythonImg" className="bgDepartment" />
+                                    <img src={bgImg} alt="PythonImg" className="bgDepartment" />
                                 </Link>
                             )
                         }

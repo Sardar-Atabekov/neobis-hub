@@ -1,0 +1,37 @@
+.project-info {
+    height: 220px;
+    padding: 20px 25px;
+    background: #F8F8F8;
+    border-radius: 20px;
+    display: flex;
+}
+
+.project-info .project-status {
+    position: relative;
+    margin-left: 60px;
+}
+.project-info img {
+    width: 85px;
+    height: 85px;
+}
+
+.project-title-block {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.project-title-block h3 {
+    margin-left: 20px;
+}
+
+.team-people {
+    display: flex;
+    flex-direction: column;
+    margin-right: 50px;
+}
+
+.product-owner {
+    display: flex;
+    flex-direction: column;
+}

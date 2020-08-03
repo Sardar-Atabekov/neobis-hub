@@ -1,0 +1,10 @@
+.active-status,
+.noActive-status {
+    width: 20px;
+    height: 20px;
+    background: #32B482;
+}
+
+.noActive-status {
+    background: #E40E00;
+}

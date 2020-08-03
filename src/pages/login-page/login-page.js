@@ -26,14 +26,15 @@ const LoginPage = (props) => {
       })
       .catch(() => setError(true));
   };
-  if(localStorage.getItem("neobisHUBDate") ) {
+  
+  if (localStorage.getItem("neobisHUBDate")) {
     props.history.push(`/users/`);
   }
   return (
     <div className="loginWrapper">
       <div className="d-flex">
         <div className="login w-50 text-left">
-          <img src={neobisLogo} alt="neobis logo"/>
+          <img src={neobisLogo} alt="neobis logo" />
           <h1>Welcome!</h1>
           {/* <h2></h2> */}
           <Form className="loginForm" onSubmit={postUserData}>
