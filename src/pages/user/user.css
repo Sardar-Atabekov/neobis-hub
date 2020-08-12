@@ -10,6 +10,7 @@
     padding: 15px;
     margin-left: 20px;
     padding-right: 150px;
+    font-family: "Montserrat-medium";
     border-right: 1px solid rgba(0, 0, 0, 0.11);
 }
 
@@ -26,6 +27,9 @@
     line-height: 27px;
 }
 
+.user-info b {
+    font-family: "Montserrat-bold";
+}
 .user-info span {
     font-size: 18px;
     font-family: "Montserrat-medium";
@@ -64,4 +68,20 @@
     border-right: 2px solid #C4C4C4;
     margin-right: 15px;
 }
+.user-role {
+    display: flex;
+    align-items: center;
+    margin-bottom: 10px;
+}
 
+.user-role .project-span {
+    margin-top: 10px;
+    margin-left: 0.6em;
+}
+
+.percentage {
+    position: absolute;
+    color: #0DC21F;
+    right: 5px;
+    top: -25px;
+}

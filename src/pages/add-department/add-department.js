@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import Title from "./../../components/title/title";
-import { postData } from "../../functions/requests";
+// import { postData } from "../../functions/requests";
 import Alert, { confirmAlert } from "../../functions/alert";
 import downloadIcon from "./../../assets/img/Group 115.png";
 import NewDepartmentIcon from "./../../assets/icons/newDepartment.svg";

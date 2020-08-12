@@ -54,7 +54,6 @@ const USerPage = (props) => {
               <div className="user-contacts">
                 <span>
                   <img src={mailSendIcon} alt="mailSendIcon" /> {userData.email}{" "}
-                  ElinaKarimova@gmail.com{" "}
                 </span>
                 <span>
                   <img src={phoneIcon} alt="phoneIcon" /> {userData.phone}
@@ -77,33 +76,35 @@ const USerPage = (props) => {
                   Проекты
                 </span>
                 <div className="user-projects">
-                  {userData.project.map((project) => (
-                    <div className="project">
-                      <div className="flex-start project-block">
-                        <img
-                          src={truckIcon}
-                          alt="Cargo truck"
-                          className="projectIcon"
-                        />
-                        <div className="project-description text-left">
-                          <h5 className="project-name">{project.name}</h5>
-                          <span className="project-span">
-                            Мобильное приложение
-                          </span>
+                  {userData.projects.map((project) => (
+                    <Link key={project.project} to={`/project/${project.project}`} className="project">
+                        <div className="flex-start project-block">
+                          <img
+                            src={truckIcon}
+                            alt="Cargo truck"
+                            className="projectIcon"
+                          />
+                          <div className="project-description text-left">
+                            <h5 className="project-name">{project.name}</h5>
+                            <span className="project-span">
+                              Мобильное приложение
+                            </span>
+                          </div>
+                          <span className={`project-status a`}>Активный</span>
+                        </div>
+                        <div className="user-role">
                           <span className="pmIcon">
                             <img src={pmIcon} alt="pm department icon" />
                           </span>
                           <span className="project-span">
                             {projectUserRole[project.user_role]}
                           </span>
-                          <p className="project-pm">
-                            {userData.name} {userData.surname}
-                          </p>
                         </div>
-                        <span className={`project-status a`}>Активный</span>
-                      </div>
-                      <div className="line-status"></div>
-                    </div>
+
+                        <div className="line-status">
+                          <span className="percentage">100%</span>
+                        </div>
+                    </Link>
                   ))}
                 </div>
               </div>

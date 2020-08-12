@@ -6,7 +6,19 @@
     padding-top: 40px;
     font-family: 'Montserrat-Medium';
 }
+
 /* 
 .add-user .form-group {
     width: 50%;
 } */
+
+.user-project {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.user-project img {
+    cursor: pointer;
+    margin-left: 10px;
+}

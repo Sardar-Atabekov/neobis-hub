@@ -16,7 +16,7 @@
 }
 
 .department-users span {
-    font-family: Montserrat;
+    font-family: 'Montserrat-medium';
     font-weight: 500;
     font-size: 22px;
     line-height: 27px;
@@ -31,7 +31,7 @@
 }
 
 .head-name {
-    font-family: Montserrat;
+    font-family: 'Montserrat-medium';
     font-weight: 600;
     font-size: 22px;
     line-height: 27px;

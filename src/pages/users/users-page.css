@@ -8,3 +8,33 @@
 .noActive-status {
     background: #E40E00;
 }
+
+.filter-block {
+    display: flex;
+    justify-content: space-between;
+}
+
+.filter-select {
+    height: 100%;
+    width: 100%;
+    color: #fff;
+    height: 72px;
+    font-family: "Montserrat-bold";
+    background: var(--mainColor);
+    border-right: 1px solid #E8E8E8;
+    border-left: 1px solid #E8E8E8;
+    border-bottom: none !important;
+    border-top: none !important;
+    color: #fff;
+    font-size: 16px;
+    padding: 5px;
+}
+
+.filter-select:focus {
+    outline-offset: inherit;
+    outline: none;
+}
+
+.filter-img {
+    margin-left: 10px;
+}

@@ -18,12 +18,14 @@ const AddProjectPage = (props) => {
   const [file, setFile] = useState("");
   const [users, setUsers] = useState([]);
   const [loading, setLoading] = useState(false);
-  const [startDate, setStartDate] = useState(new Date());
-  const [finishDate, setFinishDate] = useState(addMonths(new Date(), 1));
+  const [startDate, setStartDate] = useState(format(new Date(), "yyyy-MM-dd"));
+  const [finishDate, setFinishDate] = useState(
+    format(addMonths(new Date(), 1), "yyyy-MM-dd")
+  );
   // const [startDate, setStartDate] = useState(new Date());
   let [team, setTeam] = useState([
     {
-      id: 1,
+      number: 1,
       user: null,
       user_role: null,
     },
@@ -39,7 +41,7 @@ const AddProjectPage = (props) => {
 
   const AddUserTeam = () => {
     let user = {
-      id: team.length + 1,
+      number: team.length + 1,
       user: null,
       user_role: null,
     };
@@ -61,36 +63,40 @@ const AddProjectPage = (props) => {
     e.preventDefault();
     let formData = new FormData(e.target),
       data = {};
+
+    team = team.map((item) => {
+      delete item.number;
+      item.user_role = +item.user_role;
+      item.user = +item.user;
+      return item;
+    });
     formData.forEach((value, key) => {
       data[key] = value;
     });
-
     formData.append("name", data.name);
     formData.append("logo", file);
-    formData.append("pm", data.pm);
+    formData.append("pm", +data.pm);
     formData.append("description", data.description);
     formData.append("date_of_finish", finishDate);
     formData.append("date_of_start", startDate);
     formData.append("product_owner", data.product_owner);
     formData.append("status", data.status);
-    formData.append("team", data.team);
+    formData.append("team", JSON.stringify(team));
 
-    team = team.map((item) => {
-      delete item.id;
-      return item;
-    });
-    data.team = team;
-
-    let token = JSON.parse(localStorage.getItem("neobisHUBDate")).token;
+    console.log("formData", formData);
+    console.log("data", data);
     axios
       .post("http://46.101.236.211:8477/project/create/", formData, {
         headers: {
           "Content-Type":
             "multipart/form-data; boundary=<calculated when request is sent>",
-          Authorization: `Token ${token}`,
+          Authorization: `Token ${
+            JSON.parse(localStorage.getItem("neobisHUBDate")).token
+          }`,
         },
       })
       .then((response) => {
+        console.log("user, ", response);
         if (response.data.id) {
           Alert("Проект создан");
           setTimeout(() => props.history.push(`/projects/`), 1000);
@@ -103,11 +109,12 @@ const AddProjectPage = (props) => {
       );
   };
 
+  console.log('file', file);
   return (
     <div className="wrapper">
       <Title>Создание проекта </Title>
       {loading ? (
-        <form className="mt-5 d-flex" onSubmit={postUserData}>
+        <form className="mt-5 d-flex projectBlock" onSubmit={postUserData}>
           <div className="form-block mr-5">
             <div className="new-department-title-block mb-3">
               <img
@@ -129,13 +136,13 @@ const AddProjectPage = (props) => {
             </div>
             <div className="form-group">
               <label htmlFor="description">Краткое описание</label>
-              <input
+              <textarea
                 type="text"
                 name="description"
                 required
                 className="form-control"
                 id="description"
-              />
+              ></textarea>
             </div>
             <div className="form-group">
               <label htmlFor="product_owner">Продукт Овнер</label>
@@ -161,7 +168,7 @@ const AddProjectPage = (props) => {
                 </option>
                 {users.map((item) => (
                   <option key={item.id} value={item.id}>
-                    {item.name}
+                    {`${item.surname} ${item.name}`}
                   </option>
                 ))}
               </select>
@@ -210,22 +217,22 @@ const AddProjectPage = (props) => {
               <label htmlFor="description">Пользователи в проекте</label>
               <br />
               {team.map((item) => (
-                <div key={item.id}>
+                <div key={item.number}>
                   <div className="form-group">
-                    <label>Пользователь {item.id}</label>
+                    <label>Пользователь {item.number}</label>
                     <br />
                     <select
                       className="select form-control"
-                      onChange={(e) => changeUser(item.id, e.target.value)}
+                      onChange={(e) => changeUser(item.number, e.target.value)}
                       defaultValue=""
                       required
                     >
-                      <option value="" disabled name={`user${item.id}`}>
+                      <option value="" disabled name={`user${item.number}`}>
                         Выберите пользователя
                       </option>
                       {users.map((item) => (
                         <option key={item.id} value={item.id}>
-                          {item.name}
+                          {`${item.surname} ${item.name}`}
                         </option>
                       ))}
                     </select>
@@ -233,7 +240,7 @@ const AddProjectPage = (props) => {
                       className="select  form-control mt-3"
                       defaultValue=""
                       required
-                      onChange={(e) => changeUserRole(item.id, e.target.value)}
+                      onChange={(e) => changeUserRole(item.number, e.target.value)}
                     >
                       <option value="" disabled>
                         Выберите роль

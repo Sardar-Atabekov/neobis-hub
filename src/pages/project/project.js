@@ -33,28 +33,52 @@ const ProjectsPage = (props) => {
           <div className="project-info mt-4">
             <div className="w-50 mr-5">
               <div className="project-title-block">
-                <img src={truckIcon} alt="icon project" />
-                <h3>{project.name}</h3>
-                <span className={`project-status a`}>{project.status}</span>
+                <img
+                  src={project.logo ? project.logo : truckIcon}
+                  alt="icon project"
+                />
+                <h3 className="project-name">{project.name}</h3>
+                <span
+                  className={`project-status ${
+                    project.status == "Активный"
+                      ? "a"
+                      : project.status == "Заморожен"
+                      ? "f"
+                      : "c"
+                  }`}
+                >
+                  {project.status}
+                </span>
               </div>
-              <div className="mt-3 p-3">{project.description}</div>
+              <div className="mt-2 p-2">{project.description}</div>
             </div>
-            <div className="d-flex mt-5 ml-5">
-              <div className="mr-5">
-                <b>Дата начала:</b>
-                <br />
-                <span>{project.date_of_start}</span>
+            <div className="project-time-block">
+              <div className="line-status">
+                <span className="percentage">100%</span>
               </div>
-              <div>
-                <b>Дата завершения:</b>
-                <br />
-                <span>{project.date_of_finish}</span>
+              <div className="project-times">
+                <div>
+                  <b>Дата начала:</b>
+                  <span>{project.date_of_start}</span>
+                </div>
+                <span className="red-point"></span>
+                <div>
+                  <b>Дата завершения:</b>
+                  <span>{project.date_of_finish}</span>
+                </div>
               </div>
             </div>
           </div>
           <div className="mt-5">
             <h5>Команда</h5>
             <div className="d-flex">
+              <div className="team-people">
+                <span className="pmIcon">
+                  <img src={pmIcon} alt="pm department icon" />
+                </span>
+                <span className="mt-1">Проект Менеджер</span>
+                <b className="mt-1">{project.pm_name}</b>
+              </div>
               {project.team.map((developer) => (
                 <div className="team-people">
                   <span className="pmIcon">

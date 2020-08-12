@@ -46,7 +46,7 @@ const USerPage = (props) => {
       )
       .then((response) => {
         if (response.data.id) {
-          Alert("Департамент изменен");
+          Alert("Данные департамента изменен");
           setTimeout(() => props.history.push(`/departments`), 1000);
         }
       })

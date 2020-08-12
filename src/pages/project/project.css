@@ -10,15 +10,23 @@
     position: relative;
     margin-left: 60px;
 }
+
 .project-info img {
-    width: 85px;
-    height: 85px;
+    width: 80px;
+    height: 80px;
 }
 
 .project-title-block {
     display: flex;
     align-items: center;
-    justify-content: space-between;
+}
+
+.project-title-block .project-name {
+    margin-left: 30px;
+}
+
+.project-title-block .project-status {
+    margin-left: auto;
 }
 
 .project-title-block h3 {
@@ -32,6 +40,35 @@
 }
 
 .product-owner {
+    display: flex;
+    flex-direction: column;
+}
+
+.project-time-block {
+    display: flex;
+    width: 30%;
+    flex-direction: column;
+}
+
+.project-time-block .line-status {
+    margin-top: 50px;
+}
+
+.project-times {
+    display: flex;
+    margin-top: 30px;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.red-point {
+    width: 15px;
+    height: 15px;
+    background: #E40E00;
+    border-radius: 50%;
+}
+
+.project-times div {
     display: flex;
     flex-direction: column;
 }
