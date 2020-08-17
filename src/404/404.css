@@ -1,0 +1,107 @@
+.NotFound {
+	display: grid;
+	grid-template-columns: 1fr;
+	grid-template-rows: 1fr;
+	justify-items: center;
+	align-items: center;
+	align-self: center;
+}
+
+.nf_block {
+	display: flex;
+	flex-direction: column;
+	width: 100%;
+	min-height: 100vh;
+	justify-content: center;
+	align-items: center;
+	justify-items: center;
+	margin-top: -100px;
+
+}
+
+.nf_h1 {
+	font-style: normal;
+	font-weight: bold;
+	font-size: 200px;
+	line-height: 140.88%;
+	font-weight: 700;
+
+
+	/* or 282px */
+	display: flex;
+	align-items: center;
+	text-align: center;
+	margin: 0;
+	color: #202020;
+}
+
+.nf_img {
+	width: 74%;
+	margin: 0 20px;
+}
+
+.nf_p {
+	font-style: normal;
+	font-weight: normal;
+	font-size: 30px;
+	line-height: 140.88%;
+	color: #202020;
+	margin: 0;
+	text-align: center;
+	font-size: 46px !important;
+}
+
+.nf_button {
+	width: 206px;
+	height: 50px;
+	background: #32B482;
+	box-shadow: 0px 10px 20px rgba(50, 180, 130, 0.25);
+	border-radius: 5px;
+	color: #fff;
+	text-transform: uppercase;
+	font-family: Raleway;
+	font-style: normal;
+	font-weight: 800;
+	font-size: 16px;
+	line-height: 19px;
+	margin-top: 50px;
+	font-style: normal;
+	border: none;
+}
+
+@media (max-width: 660px) {
+
+	.NotFound {
+		justify-content: center;
+		align-items: center;
+		justify-items: center;
+	}
+
+	.nf_block {
+		align-self: center;
+		justify-self: center;
+	}
+
+	.nf_h1 {
+		font-size: 112px;
+		line-height: 100px;
+	}
+
+	.nf_img {
+		width: 50%;
+		align-self: center;
+		justify-self: center;
+		margin: 0;
+	}
+
+	.nf_p {
+		font-size: 21px;
+	}
+
+	.nf_button {
+		width: 140px;
+		height: 40px;
+		font-size: 14px;
+	}
+
+}

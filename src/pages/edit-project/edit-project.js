@@ -42,7 +42,7 @@ const AddProjectPage = (props) => {
   const AddUserTeam = () => {
     let user = {
       id: team.length + 1,
-      user: null,
+      name: null,
       user_role: null,
     };
 
@@ -50,11 +50,11 @@ const AddProjectPage = (props) => {
   };
 
   const changeUser = (id, value) => {
-    team[id - 1].user = value;
+    team[id - 1].name = value;
     setTeam([...team]);
   };
 
-  console.log('team', team);
+  console.log("team", team);
   const changeUserRole = (id, value) => {
     team[id - 1].user_role = value;
     setTeam([...team]);
@@ -77,9 +77,11 @@ const AddProjectPage = (props) => {
       delete item.department;
       delete item.telegram;
       item.user_role = +item.user_role;
-      item.user = users.filter(
-        (user) => `${user.surname} ${user.name}` == item.name
-      )[0].id;
+      item.user = users.filter((user) => {
+        console.log('item',item );
+        console.log('user',user );
+        return `${user.surname} ${user.name}` == item.name;
+      })[0].id;
       delete item.name;
       console.log(item.user, item.user);
       console.log("item", item);

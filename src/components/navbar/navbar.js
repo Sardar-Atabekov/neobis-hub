@@ -44,7 +44,7 @@ const NavBar = () => {
         <img src={newsIcon} alt="newsIcon" />
         Новости
       </Link>
-      <Link to={`/user/${id}`} className="categories">
+      <Link to={`/personal/${id}`} className="categories">
         <img src={userIcon} alt="newsIcon" />
         Личный кабинет
       </Link>

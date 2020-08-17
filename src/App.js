@@ -11,11 +11,12 @@ import EditUserPage from "./pages/edit-user/edit-user";
 import DepartmentPage from "./pages/department/department";
 import AddProjectPage from "./pages/add-project/add-project";
 import DepartmentsPage from "./pages/departments/departments";
+import PersonalPage from "./pages/personal-area/personal-area";
 import EditProjectPage from "./pages/edit-project/edit-project";
 import { Route, Switch, BrowserRouter } from "react-router-dom";
 import AddDepartmentPage from "./pages/add-department/add-department";
 import EditDepartmentPage from "./pages/edit-department/edit-department";
-// import NotFound from "./pages/404/404";
+import NotFound from "./pages/404/404";
 function App() {
   return (
     <BrowserRouter>
@@ -30,6 +31,7 @@ function App() {
             <Route path="/add-user" exact component={AddUserPage} />
             <Route path="/projects" exact component={ProjectsPage} />
             <Route path="/project/:id" exact component={ProjectPage} />
+            <Route path="/personal/:id" exact component={NotFound} />
             <Route path="/add-project" exact component={AddProjectPage} />
             <Route path="/edit-user/:id" exact component={EditUserPage} />
             <Route path="/departments" exact component={DepartmentsPage} />
