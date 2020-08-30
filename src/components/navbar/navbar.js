@@ -34,7 +34,7 @@ const NavBar = () => {
     });
   };
 
-  let id = JSON.parse(localStorage.getItem("neobisHUBDate")).user_id -1;
+  let id = JSON.parse(localStorage.getItem("neobisHUBDate")).user_id;
   return (
     <nav className="navigationComponent text-left">
       <Link to={"/departments/"}>
@@ -44,7 +44,7 @@ const NavBar = () => {
         <img src={newsIcon} alt="newsIcon" />
         Новости
       </Link>
-      <Link to={`/personal/${id}`} className="categories">
+      <Link to={`/personal/${id}/`} className="categories">
         <img src={userIcon} alt="newsIcon" />
         Личный кабинет
       </Link>
@@ -75,11 +75,4 @@ const NavBar = () => {
   );
 };
 
-// const Category = ({ children }) => {
-//   return (
-//     <Link to={"/projects/"} className="categories">
-//       Проекты
-//     </Link>
-//   );
-// };
 export default NavBar;

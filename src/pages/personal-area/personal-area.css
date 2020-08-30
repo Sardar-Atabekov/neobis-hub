@@ -1,0 +1,84 @@
+.tab-block {
+    border-bottom: 1.5px solid rgba(0, 0, 0, 0.2);
+    padding: 20px 0;
+}
+
+
+.personal-area {
+    background: #F8F8F8;
+    padding-right: 0 !important;
+    padding-top: 0 !important;
+}
+
+.tab-block span {
+    height: 48px;
+    padding: 6px 15px;
+    margin-right: 10px;
+    color: #777777;
+    cursor: pointer;
+    font-family: "Montserrat-bold";
+}
+
+.active-tab {
+    width: 149px;
+    background: #27C085;
+    border-radius: 12px;
+    color: #fff !important;
+}
+
+.personal-block {
+    display: flex;
+    justify-content: space-between;
+    height: 100%;
+}
+
+.w-60 {
+    width: 60%;
+    padding-top: 10px;
+}
+
+.w-30 {
+    width: 30%;
+}
+
+.personalInfo-block {
+    display: flex;
+    flex-direction: column;
+    padding: 10px 25px;
+    background: #fff;
+}
+
+.personalTitle-block {
+    display: flex;
+    margin-top: 10px;
+    padding: 15px 0;
+    justify-content: space-between;
+    align-items: center;
+    border-bottom: 1.5px solid rgba(0, 0, 0, 0.2);
+}
+
+.userPhoto {
+    width: 120px;
+    height: 120px;
+    margin: 20px 0;
+}
+
+.photo-block {
+    padding: 15px 0;
+    border-bottom: 1px solid rgba(0, 0, 0, 0.2);
+}
+
+.contacts-block {
+    display: flex;
+    flex-direction: column;
+    padding: 20px 0;
+    border-bottom: 1px solid rgba(0, 0, 0, 0.2);
+}
+
+.contacts-block span {
+    margin-bottom: 5px;
+}
+
+.contacts-block img {
+    margin-right: 10px;
+}

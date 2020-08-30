@@ -1,21 +1,20 @@
 import React, { useState, useEffect } from "react";
 import Title from "../../components/title/title";
-import Loading from "../../components/loading/loading";
-import Alert, { confirmAlert } from "../../functions/alert";
-import downloadIcon from "./../../assets/img/Group 115.png";
-import { getData, postData } from "../../functions/requests";
-import { userRole, userStatus } from "../../constants/status";
-import NewDepartmentIcon from "./../../assets/icons/newDepartment.svg";
-import DatePicker, { registerLocale } from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
-import ruDateLocale from "date-fns/locale/ru";
 import { format, addDays, addMonths } from "date-fns";
+// import Loading from "../../components/loading/loading";
+import Alert, { confirmAlert } from "../../functions/alert";
+import { postData, getData } from "../../functions/requests";
+import DatePicker, { registerLocale } from "react-datepicker";
+import NewDepartmentIcon from "./../../assets/icons/newDepartment.svg";
+import { userRole, userStatus, projectType } from "../../constants/status";
+import ruDateLocale from "date-fns/locale/ru";
 import "./add-project.css";
 import axios from "axios";
 registerLocale("ru", ruDateLocale);
 // import { Table } from "reactstrap";
 const AddProjectPage = (props) => {
-  const [file, setFile] = useState("");
+  // const [type, setType] = useState("false");
   const [users, setUsers] = useState([]);
   const [loading, setLoading] = useState(false);
   const [startDate, setStartDate] = useState(format(new Date(), "yyyy-MM-dd"));
@@ -73,35 +72,22 @@ const AddProjectPage = (props) => {
     formData.forEach((value, key) => {
       data[key] = value;
     });
-    formData.append("name", data.name);
-    formData.append("logo", file);
-    formData.append("pm", +data.pm);
-    formData.append("description", data.description);
-    formData.append("date_of_finish", finishDate);
-    formData.append("date_of_start", startDate);
-    formData.append("product_owner", data.product_owner);
-    formData.append("status", data.status);
-    formData.append("team", JSON.stringify(team));
 
-    console.log("formData", formData);
+    data.team = team;
+    data.pm = +data.pm;
+    data.project_type = +data.project_type;
+    data.date_of_start = startDate;
+    data.date_of_finish = finishDate;
     console.log("data", data);
-    axios
-      .post("http://46.101.236.211:8477/project/create/", formData, {
-        headers: {
-          "Content-Type":
-            "multipart/form-data; boundary=<calculated when request is sent>",
-          Authorization: `Token ${
-            JSON.parse(localStorage.getItem("neobisHUBDate")).token
-          }`,
-        },
-      })
+
+    postData("project/create/", data)
       .then((response) => {
-        console.log("user, ", response);
-        if (response.data.id) {
-          Alert("Проект создан");
+        console.log("response", response);
+        if (response.id) {
+          Alert("Новость добавлена");
           setTimeout(() => props.history.push(`/projects/`), 1000);
         } else {
-          Alert(response.error ? response.error : response.detail, "error");
+          Alert(response.detail, "error");
         }
       })
       .catch(() =>
@@ -109,13 +95,12 @@ const AddProjectPage = (props) => {
       );
   };
 
-  console.log('file', file);
   return (
     <div className="wrapper">
       <Title>Создание проекта </Title>
       {loading ? (
-        <form className="mt-5 d-flex projectBlock" onSubmit={postUserData}>
-          <div className="form-block mr-5">
+        <form className="flex-block" onSubmit={postUserData}>
+          <div className="form-block mr-5 input-blocks">
             <div className="new-department-title-block mb-3">
               <img
                 src={NewDepartmentIcon}
@@ -210,7 +195,27 @@ const AddProjectPage = (props) => {
               <select id="status" className="select form-control" name="status">
                 <option value="a">Активный</option>
                 <option value="f">Заморожен</option>
-                <option value="s">Завершенный</option>
+                <option value="c">Завершенный</option>
+              </select>
+            </div>
+            <div className="form-group">
+              <label htmlFor="type">Тип проекта</label>
+              <select
+                id="type"
+                className="select form-control"
+                defaultValue=""
+                required
+                name="project_type"
+                // onChange={(e) => setType(e.target.value)}
+              >
+                <option value="" disabled>
+                  Выберите тип проекта
+                </option>
+                {Object.entries(projectType).map((item) => (
+                  <option value={item[0]} key={item[0]}>
+                    {item[1]}
+                  </option>
+                ))}
               </select>
             </div>
             <div className="mt-2">
@@ -240,7 +245,9 @@ const AddProjectPage = (props) => {
                       className="select  form-control mt-3"
                       defaultValue=""
                       required
-                      onChange={(e) => changeUserRole(item.number, e.target.value)}
+                      onChange={(e) =>
+                        changeUserRole(item.number, e.target.value)
+                      }
                     >
                       <option value="" disabled>
                         Выберите роль
@@ -267,26 +274,6 @@ const AddProjectPage = (props) => {
                 className="btn add-btn w-50 mt-5"
                 value="Сохранить"
               />
-            </div>
-          </div>
-          <div>
-            <div className="download-icon">
-              <label htmlFor="userProfilePicture" className="text-center">
-                <img
-                  src={downloadIcon}
-                  alt="NewDepartmentIcon "
-                  className="downloadIcon"
-                />
-              </label>
-              <input
-                type="file"
-                id="userProfilePicture"
-                className="d-none"
-                onChange={(e) => setFile(e.target.files[0])}
-              />
-              <label htmlFor="userProfilePicture" className="download-text">
-                <span>Загрузить логотип</span>
-              </label>
             </div>
           </div>
         </form>

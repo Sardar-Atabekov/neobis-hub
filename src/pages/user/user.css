@@ -30,6 +30,7 @@
 .user-info b {
     font-family: "Montserrat-bold";
 }
+
 .user-info span {
     font-size: 18px;
     font-family: "Montserrat-medium";
@@ -64,10 +65,11 @@
 .user-projects {
     display: grid;
     grid-template-columns: 1fr 1fr;
+    grid-gap: 1vw;
     padding-top: 20px;
-    border-right: 2px solid #C4C4C4;
     margin-right: 15px;
 }
+
 .user-role {
     display: flex;
     align-items: center;

@@ -28,7 +28,14 @@
     color: #fff;
     font-size: 16px;
     padding: 5px;
+    /* background-image: url(http://cdn1.iconfinder.com/data/icons/cc_mono_icon_set/blacks/16x16/br_down.png);
+    background-repeat:  no-repeat;
+    background-position: right;
+    right: 10px;
+    -webkit-appearance: none; */
+    /* background-position-x: 70px; */
 }
+
 
 .filter-select:focus {
     outline-offset: inherit;

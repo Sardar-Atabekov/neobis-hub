@@ -12,12 +12,12 @@ import mailSendIcon from "./../../assets/icons/bx-mail-send.svg";
 import StudyPlan from "./../../components/study-plan/study-plan";
 import { userRole, projectUserRole } from "./../../constants/status";
 import { Link } from "react-router-dom";
-import { Table } from "reactstrap";
 import "./user.css";
-// import { Table } from "reactstrap";
-const USerPage = (props) => {
+
+const UserPage = (props) => {
   const [loading, setLoading] = useState(false);
   const [userData, setUserData] = useState([]);
+  const userRights = JSON.parse(localStorage.getItem("neobisHUBDate"));
 
   useEffect(() => {
     getData(`user/${props.match.params.id}`).then((res) => {
@@ -26,19 +26,13 @@ const USerPage = (props) => {
     });
   }, [props.match.params.id]);
 
-  // const getDepartment = () => {
-  //     getData(`department/${props.match.params.id}`).then((res) => {
-  //         setDepartment(res);
-  //         setLoading(true);
-  //     });
-  // };
-
-  console.log("userData", userData);
   return (
     <div className="wrapper">
       {loading ? (
         <>
-          <Title link={`/edit-user/${userData.id}`}>
+          <Title
+            link={userRights.change_user ? `/edit-user/${userData.id}/` : false}
+          >
             Карточка пользователя
           </Title>
           <div>
@@ -77,33 +71,37 @@ const USerPage = (props) => {
                 </span>
                 <div className="user-projects">
                   {userData.projects.map((project) => (
-                    <Link key={project.project} to={`/project/${project.project}`} className="project">
-                        <div className="flex-start project-block">
-                          <img
-                            src={truckIcon}
-                            alt="Cargo truck"
-                            className="projectIcon"
-                          />
-                          <div className="project-description text-left">
-                            <h5 className="project-name">{project.name}</h5>
-                            <span className="project-span">
-                              Мобильное приложение
-                            </span>
-                          </div>
-                          <span className={`project-status a`}>Активный</span>
-                        </div>
-                        <div className="user-role">
-                          <span className="pmIcon">
-                            <img src={pmIcon} alt="pm department icon" />
-                          </span>
+                    <Link
+                      key={project.project}
+                      to={`/project/${project.project}`}
+                      className="project"
+                    >
+                      <div className="flex-start project-block">
+                        <img
+                          src={truckIcon}
+                          alt="Cargo truck"
+                          className="projectIcon"
+                        />
+                        <div className="project-description text-left">
+                          <h5 className="project-name">{project.name}</h5>
                           <span className="project-span">
-                            {projectUserRole[project.user_role]}
+                            Мобильное приложение
                           </span>
                         </div>
+                        <span className={`project-status a`}>Активный</span>
+                      </div>
+                      <div className="user-role">
+                        <span className="pmIcon">
+                          <img src={pmIcon} alt="pm department icon" />
+                        </span>
+                        <span className="project-span">
+                          {projectUserRole[project.user_role]}
+                        </span>
+                      </div>
 
-                        <div className="line-status">
-                          <span className="percentage">100%</span>
-                        </div>
+                      <div className="line-status">
+                        <span className="percentage">100%</span>
+                      </div>
                     </Link>
                   ))}
                 </div>
@@ -126,4 +124,4 @@ const USerPage = (props) => {
     </div>
   );
 };
-export default USerPage;
+export default UserPage;

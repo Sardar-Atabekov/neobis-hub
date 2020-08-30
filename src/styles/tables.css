@@ -18,13 +18,11 @@
 .tbody-item {
     background: #fff;
     color: #000;
-    text-align: center;
-
+    text-align: left;
     font-size: 16px;
     font-family: "Montserrat-medium";
     border: 1px solid #E8E8E8;
 }
-
 
 .item-delete {
     color: #D71B0F;

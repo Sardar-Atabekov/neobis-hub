@@ -1,12 +1,16 @@
 .department {
     display: flex;
-    background: #115EF8;
     border-radius: 10px;
+    background: #115EF8;
+
     width: 380px;
     padding: 15px;
     color: #fff;
     margin-bottom: 3px;
     font-family: 'Montserrat-medium';
+    /* background-repeat: no-repeat;
+    background-size: cover;
+    background-position: center; */
 }
 
 .department:hover {
@@ -14,11 +18,17 @@
 }
 
 .bgDepartment {
-    height: 160px;
+    width: 140px;
+    margin: 5px 0;
 }
 
 .counts-department {
     margin-top: 5px;
+}
+
+.department-info {
+    display: flex;
+    flex-direction: column;
 }
 
 .icon-block {
@@ -33,9 +43,15 @@
 }
 
 .icon-block img {
-    width: 40px;
-    /* height: 40px; */
+    width: 30px;
+    height: 30px;
+    color: #000;
 }
+
+.people-count {
+    margin-top: auto;
+}
+
 .mentor_count {
     margin-right: 10px;
 }

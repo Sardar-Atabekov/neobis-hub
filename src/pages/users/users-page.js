@@ -12,14 +12,14 @@ import { confirmAlert } from "../../functions/alert";
 import "./users-page.css";
 
 const UsersPage = () => {
-  const [role, setRole] = useState([]);
-  const [status, setStatus] = useState("all");
+  const [role, setRole] = useState("false");
   const [users, setUsersData] = useState([]);
+  const [status, setStatus] = useState("false");
   const [loading, setLoading] = useState(false);
-  const [filterData, setFilterData] = useState([]);
-  const [department, setDepartment] = useState("all");
-  const [departments, setDepartments] = useState([]);
   const [searchText, setSearchText] = useState("");
+  const [departments, setDepartments] = useState([]);
+  const [department, setDepartment] = useState("false");
+  const userRights = JSON.parse(localStorage.getItem("neobisHUBDate"));
 
   useEffect(() => {
     getData("department/")
@@ -33,61 +33,25 @@ const UsersPage = () => {
   }, []);
 
   useEffect(() => {
-    getUsers();
-  }, []);
-
-  useEffect(() => {
-    let filteredData = [];
-    if (searchText != "all") {
-      filteredData = filterData.filter(
-        (user) => `${user.surname} ${user.name}`.search(searchText) !== -1
-      );
-    }
-
-    setUsersData([...filteredData]);
-  }, [searchText]);
-
-  useEffect(() => {
-    let filteredData = [];
-    if (role == "all") {
-      filteredData = filterData;
-    } else {
-      filteredData = filterData.filter((user) => user.status == role);
-      console.log("filteredData", filteredData);
-    }
-
-    if (status == "all") {
-      filteredData = filteredData;
-    } else {
-      filteredData = filterData.filter((user) => `${user.is_active}` == status);
-    }
-
-    if (department == "all") {
-      filteredData = filteredData;
-    } else {
-      filteredData = filterData.filter(
-        (user) => `${user.department_name}` == department
-      );
-    }
-
-    setUsersData([...filteredData]);
-  }, [role, status, department]);
-
-  const getUsers = () => {
-    getData("user/").then((res) => {
-      setFilterData(res);
-      setLoading(true);
+    setLoading(false);
+    getData(
+      `user/?${department !== "false" ? `department=${department}` : ""}${
+        role !== "false" ? `&&role=${role}` : ""
+      }${status !== "false" ? `&&is_active=${status}` : ""}${
+        searchText && `&&search=${searchText}`
+      }`
+    ).then((res) => {
       setUsersData(res);
+      setLoading(true);
     });
-  };
+  }, [role, status, department, searchText]);
 
-  console.log(users);
   return (
     <div className="wrapper">
       <Title search={true} setSearchText={setSearchText}>
         Пользователи
       </Title>
-      <AddBtn url="add-user" />
+      {userRights.add_project ? <AddBtn url="add-user" /> : null}
       {loading ? (
         <Table striped className={"mb-5 table-3 tables"}>
           <thead>
@@ -96,13 +60,13 @@ const UsersPage = () => {
                 <span>Ф. И. О.</span>{" "}
               </th>
               <select
-                defaultValue=""
+                defaultValue={department}
                 className="filter-select"
                 onChange={(e) => setDepartment(e.target.value)}
               >
-                <option value="all">Департамент</option>
+                <option value="false">Департамент</option>
                 {departments.map((department) => (
-                  <option key={department.id} value={department.name}>
+                  <option key={department.id} value={department.id}>
                     {department.name}
                   </option>
                 ))}
@@ -111,11 +75,11 @@ const UsersPage = () => {
                 <span>Номер телефона </span>
               </th>
               <select
-                defaultValue=""
+                defaultValue={role}
                 className="filter-select"
                 onChange={(e) => setRole(e.target.value)}
               >
-                <option value="all">Роль</option>
+                <option value={"false"}>Роль</option>
                 <option value="h">Мембер</option>
                 <option value="m">Ментор</option>
                 <option value="t">Тимлид</option>
@@ -126,21 +90,23 @@ const UsersPage = () => {
               <th className={"thead-item "}>
                 <span>Завершенные</span>
               </th>
-              <select
-                defaultValue=""
-                className="filter-select"
-                onChange={(e) => setStatus(e.target.value)}
-              >
-                <option value="all">Статус</option>
-                <option value={"true"}>Активные</option>
-                <option value={"false"}>Неактивные</option>
-              </select>
+              {userRights.add_project ? (
+                <select
+                  defaultValue=""
+                  className="filter-select"
+                  onChange={(e) => setStatus(e.target.value)}
+                >
+                  <option value="false">Статус</option>
+                  <option value={"True"}>Активные</option>
+                  <option value={"False"}>Неактивные</option>
+                </select>
+              ) : null}
             </tr>
           </thead>
           <tbody className={"tbody"}>
             {users.map((user) => (
               <tr key={user.id}>
-                <td data-th="Ф.И.О" className={"tbody-item"}>
+                <td data-th="Ф.И.О" className={"tbody-item table-Username"}>
                   <Link to={`/user/${user.id}/`}>
                     {user.name ? user.name : user.email} {user.surname}
                   </Link>
@@ -160,12 +126,14 @@ const UsersPage = () => {
                 <td data-th="Завершенные" className={"tbody-item"}>
                   {user.finished_projects_count}
                 </td>
-                <td data-th="Статус" className={"tbody-item"}>
-                  <img
-                    src={user.is_active ? activeIcon : noActiveIcon}
-                    alt="user status"
-                  />
-                </td>
+                {userRights.add_project ? (
+                  <td data-th="Статус" className={"tbody-item"}>
+                    <img
+                      src={user.is_active ? activeIcon : noActiveIcon}
+                      alt="user status"
+                    />
+                  </td>
+                ) : null}
                 {/* <td className={"tbody-item item-more"}>
                                         <Link to={`/user/${user.id}/`}>Посмотреть</Link>
                                     </td>

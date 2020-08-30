@@ -105,3 +105,22 @@
      width: 50px;
      height: 50px;
  }
+
+ .pagination-block {
+     display: flex;
+     justify-content: center;
+     margin: 20px;
+ }
+
+ .active-btn {
+     background: var(--mainColor);
+     color: #fff;
+ }
+
+ .active-btn:hover {
+     color: #fff;
+ }
+
+ .pg-btn {
+     margin: 10px;
+ }

@@ -13,8 +13,9 @@ import {
 import "./project.css";
 // import { Table } from "reactstrap";
 const ProjectsPage = (props) => {
-  const [loading, setLoading] = useState(false);
   const [project, setProject] = useState([]);
+  const [loading, setLoading] = useState(false);
+  const userRights = JSON.parse(localStorage.getItem("neobisHUBDate"));
 
   useEffect(() => {
     getData(`project/${props.match.params.id}`).then((res) => {
@@ -27,7 +28,15 @@ const ProjectsPage = (props) => {
   console.log(project);
   return (
     <div className="wrapper">
-      <Title link={`/edit-project/${props.match.params.id}`}>Проект</Title>
+      <Title
+        link={
+          userRights.change_project
+            ? `/edit-project/${props.match.params.id}/`
+            : null
+        }
+      >
+        Проект
+      </Title>
       {loading ? (
         <div>
           <div className="project-info mt-4">

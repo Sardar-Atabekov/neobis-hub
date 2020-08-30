@@ -1,11 +1,12 @@
 import React, { useState, useEffect } from "react";
-import Loading from "../../components/loading/loading";
 import Title from "../../components/title/title";
-import { getData, postData } from "../../functions/requests";
+
+import Loading from "../../components/loading/loading";
 import Alert, { confirmAlert } from "../../functions/alert";
+import { getData, postData } from "../../functions/requests";
 import "./add-user.css";
-// import { Table } from "reactstrap";
-const AddProjectPage = (props) => {
+
+const AddUserPage = (props) => {
   const [loading, setLoading] = useState(false);
   const [departments, setDepartments] = useState([]);
   useEffect(() => {
@@ -27,7 +28,7 @@ const AddProjectPage = (props) => {
     formData.forEach((value, key) => {
       data[key] = value;
     });
-    data.role = 5;
+
     data.department = +data.department;
     console.log(data);
     postData("user/create/", data)
@@ -35,9 +36,9 @@ const AddProjectPage = (props) => {
         console.log("response", response);
         if (response.message) {
           Alert("Пользователь добавлен");
-          setTimeout(() => props.history.push(`/users`), 1000);
+          setTimeout(() => props.history.push(`/users/`), 1000);
         } else {
-          Alert(response, "error");
+          Alert(response.detail ? response.detail : response, "error");
         }
       })
       .catch(() =>
@@ -49,7 +50,7 @@ const AddProjectPage = (props) => {
     <div className="wrapper">
       <Title>Создание пользователя </Title>
       {loading ? (
-        <form className="add-user" onSubmit={postUserData}>
+        <form className="input-blocks pt-4" onSubmit={postUserData}>
           <div className="form-group">
             <label htmlFor="email">Email</label>
             <input
@@ -90,7 +91,6 @@ const AddProjectPage = (props) => {
             </select>
           </div>
           <div className="text-right">
-            {" "}
             <input
               type="submit"
               className="btn add-btn w-50 mt-5"
@@ -98,8 +98,10 @@ const AddProjectPage = (props) => {
             />
           </div>
         </form>
-      ) : null}
+      ) : (
+        <Loading />
+      )}
     </div>
   );
 };
-export default AddProjectPage;
+export default AddUserPage;

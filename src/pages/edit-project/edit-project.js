@@ -1,28 +1,30 @@
 import React, { useState, useEffect } from "react";
 import Title from "../../components/title/title";
 import Loading from "../../components/loading/loading";
+import Alert, { confirmAlert } from "../../functions/alert";
+import downloadIcon from "./../../assets/img/Group 115.png";
+import DeleteBtn from "./../../components/buttons/deleteBtn";
+import deleteIcon from "./../../assets/icons/deleteIcon.svg";
 import {
   getData,
-  postData,
-  putData,
   patchData,
+  patchFilesData,
+  putFilesData,
 } from "../../functions/requests";
-import downloadIcon from "./../../assets/img/Group 115.png";
-
-import DeleteBtn from "./../../components/buttons/deleteBtn";
-import { userRole, userStatus } from "../../constants/status";
+// import { userRole, userStatus } from "../../constants/status";
 import NewDepartmentIcon from "./../../assets/icons/newDepartment.svg";
-import deleteIcon from "./../../assets/icons/deleteIcon.svg";
-import Alert, { confirmAlert } from "../../functions/alert";
-// import { Table } from "reactstrap";
+import "./edit-project.css";
+import axios from "axios";
 const AddProjectPage = (props) => {
+  let [team, setTeam] = useState([]);
   const [users, setUsers] = useState([]);
-  const [file, setFile] = useState("");
-
+  const [logo, setLogo] = useState(false);
   const [project, setProject] = useState([]);
   const [loading, setLoading] = useState(false);
+  const [downloadImg, setDownloadImg] = useState("");
   const [loadingUsers, setLoadingUsers] = useState(false);
-  let [team, setTeam] = useState([]);
+
+  const userRights = JSON.parse(localStorage.getItem("neobisHUBDate"));
 
   useEffect(() => {
     getData("user/").then((res) => {
@@ -36,6 +38,7 @@ const AddProjectPage = (props) => {
       setProject(res);
       setTeam(res.team);
       setLoading(true);
+      setDownloadImg(res.logo ? res.logo : downloadIcon);
     });
   }, [props.match.params.id]);
 
@@ -54,7 +57,6 @@ const AddProjectPage = (props) => {
     setTeam([...team]);
   };
 
-  console.log("team", team);
   const changeUserRole = (id, value) => {
     team[id - 1].user_role = value;
     setTeam([...team]);
@@ -65,10 +67,12 @@ const AddProjectPage = (props) => {
     team = team.filter((item) => item);
     setTeam([...team]);
   };
-  const postUserData = (e) => {
+  
+  const postProjectData = (e) => {
     e.preventDefault();
     let formData = new FormData(e.target),
-      data = {};
+      data = {},
+      logoData = new FormData();
     formData.forEach((value, key) => {
       data[key] = value;
     });
@@ -78,8 +82,8 @@ const AddProjectPage = (props) => {
       delete item.telegram;
       item.user_role = +item.user_role;
       item.user = users.filter((user) => {
-        console.log('item',item );
-        console.log('user',user );
+        console.log("item", item);
+        console.log("user", user);
         return `${user.surname} ${user.name}` == item.name;
       })[0].id;
       delete item.name;
@@ -92,9 +96,25 @@ const AddProjectPage = (props) => {
       (item) => `${item.surname} ${item.name}` == data.pm
     )[0].id;
     data.team = team;
-    patchData(`project/update_delete/${props.match.params.id}/`, data)
+
+    if (logo) {
+      logoData.append("logo", logo);
+      putFilesData(`project/logo/${project.id}/`, logoData)
+        .then((response) => {
+          console.log(response);
+          if (response.id) {
+            Alert("Данные проекта изменен");
+            // setTimeout(() => props.history.push(`/projects/`), 1000);
+          } else {
+            Alert(response.error ? response.error : response.detail, "error");
+          }
+        })
+        .catch(() =>
+          confirmAlert("Ошибка сервера. Напишите нам, мы всё починим.")
+        );
+    }
+    patchData(`project/update_delete/${project.id}/`, data)
       .then((response) => {
-        console.log(response);
         if (response.id) {
           Alert("Данные проекта изменен");
           setTimeout(() => props.history.push(`/projects/`), 1000);
@@ -111,8 +131,8 @@ const AddProjectPage = (props) => {
     <div className="wrapper">
       <Title>Редактирования проекта </Title>
       {loading && loadingUsers ? (
-        <form className="add-user d-flex projectBlock" onSubmit={postUserData}>
-          <div className="form-block mr-5">
+        <form className="flex-block" onSubmit={postProjectData}>
+          <div className="mr-5 input-blocks">
             <div className="new-department-title-block mb-3">
               <img
                 src={NewDepartmentIcon}
@@ -212,7 +232,7 @@ const AddProjectPage = (props) => {
               <br />
               {team.map((item, i) => (
                 <div key={i} className="user-project">
-                  <div className="form-group">
+                  <div className="form-group w-100">
                     <label>Пользователь {i + 1}</label>
                     <br />
                     <select
@@ -261,32 +281,38 @@ const AddProjectPage = (props) => {
               </div>
             </div>
             <div className="button-block">
-              <DeleteBtn
-                title={`Вы уверены что хотите удалить проект ${project.name}?`}
-                subTitle="Проект удален"
-                url={`project/update_delete/${project.id}/`}
-                toUrl={"/projects"}
-                props={props}
-              />
+              {userRights.add_project ? (
+                <DeleteBtn
+                  title={`Вы уверены что хотите удалить проект ${project.name}?`}
+                  subTitle="Проект удален"
+                  url={`project/update_delete/${project.id}/`}
+                  toUrl={"/projects/"}
+                  props={props}
+                />
+              ) : null}
+
               <input type="submit" className="btn add-btn" value="Сохранить" />
             </div>
           </div>{" "}
           <div>
-            <div className="download-icon">
-              <label htmlFor="userProfilePicture" className="text-center">
+            <div className="text-center">
+              <label htmlFor="logo" className="text-center">
                 <img
-                  src={downloadIcon}
+                  src={downloadImg}
                   alt="NewDepartmentIcon "
-                  className="downloadIcon"
+                  className="download-img"
                 />
               </label>
               <input
                 type="file"
-                id="userProfilePicture"
+                id="logo"
                 className="d-none"
-                onChange={(e) => setFile(e.target.files[0])}
+                onChange={(e) => {
+                  setLogo(e.target.files[0]);
+                  setDownloadImg(URL.createObjectURL(e.target.files[0]));
+                }}
               />
-              <label htmlFor="userProfilePicture" className="download-text">
+              <label htmlFor="logo" className="download-text">
                 <span>Загрузить логотип</span>
               </label>
             </div>

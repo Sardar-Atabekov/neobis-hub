@@ -8,49 +8,67 @@ import { Link } from "react-router-dom";
 import "./departments.css";
 // import { Table } from "reactstrap";
 const DepartmentsPage = () => {
-    const [loading, setLoading] = useState(false);
-    const [departments, setDepartments] = useState([]);
+  const [loading, setLoading] = useState(false);
+  const [departments, setDepartments] = useState([]);
+  const userRights = JSON.parse(localStorage.getItem("neobisHUBDate"));
 
-    useEffect(() => {
-        getDepartments();
-    }, []);
+  const colors = [
+    "#07B755",
+    "#FD5A01",
+    "#0300A6",
+    "#555555",
+    "#E93C05",
+    "#FFA902",
+    "#115EF8",
+    "#4723A9",
+  ];
+  useEffect(() => {
+    getData("department/").then((res) => {
+      console.log(res);
+      setDepartments(res);
+      setLoading(true);
+    });
+  }, []);
 
-    const getDepartments = () => {
-        getData("department/").then((res) => {
-            console.log(res);
-            setDepartments(res);
-            setLoading(true);
-        });
-    };
-
-    console.log(departments);
-    return (
-        <div className="wrapper">
-            <Title>Департаменты</Title>
-            <AddBtn url="add-department" />
-            {
-                loading ?
-                    <div className="grid" >
-                        {
-                            departments.map(department =>
-                                <Link className="department" key={department.id} to={`/department/${department.id}`}>
-                                    <div>
-                                        <div className="icon-block">
-                                            <img src={department.logo} alt="PythonIcon" />
-                                        </div>
-                                        <h4>{department.name} department</h4>
-                                        <span>{department.count} человек</span>
-                                        <div className="counts-department">
-                                            <span className="mentor_count">Менторы: {department.mentor_count}</span>
-                                        </div>
-                                    </div>
-                                    <img src={bgImg} alt="PythonImg" className="bgDepartment" />
-                                </Link>
-                            )
-                        }
-                    </div> : <Loading />
-            }
+  console.log(departments);
+  return (
+    <div className="wrapper">
+      <Title>Департаменты</Title>
+      {userRights.add_department ? <AddBtn url="add-department" /> : null}
+      {loading ? (
+        <div className="grid">
+          {departments.map((department, i) => (
+            <Link
+              className="department"
+              key={department.id}
+              to={`/department/${department.id}/`}
+              style={{ background: colors[i] }}
+              //   style={{ backgroundImage: `url(${department.background})` }}
+            >
+              <div className="department-info">
+                <div className="icon-block">
+                  <img src={department.logo} alt={department.name} />
+                </div>
+                <h4>{department.name} department</h4>
+                <span className="people-count">{department.count} человек</span>
+                <div className="counts-department">
+                  <span className="mentor_count">
+                    Менторы: {department.mentor_count}
+                  </span>
+                </div>
+              </div>
+              <img
+                src={department.background ? department.background : bgImg}
+                alt={department.name}
+                className="bgDepartment"
+              />
+            </Link>
+          ))}
         </div>
-    );
+      ) : (
+        <Loading />
+      )}
+    </div>
+  );
 };
 export default DepartmentsPage;

@@ -1,19 +1,20 @@
 import React, { useEffect, useState } from "react";
 import { getData } from "../../functions/requests";
 import Title from "./../../components/title/title";
-import Loading from "../../components/loading/loading";
-import PythonIcon from "./../../assets/icons/python.svg";
 import { userRole } from "./../../constants/status";
+import Loading from "../../components/loading/loading";
 import { Link } from "react-router-dom";
 import { Table } from "reactstrap";
 import "./department.css";
-// import { Table } from "reactstrap";
+
 const DepartmentPage = (props) => {
+  const [role, setRole] = useState("all");
+  const [users, setUsersData] = useState([]);
   const [loading, setLoading] = useState(false);
   const [department, setDepartment] = useState([]);
-  const [role, setRole] = useState([]);
-  const [users, setUsersData] = useState([]);
   const [filterData, setFilterData] = useState([]);
+  const userRights = JSON.parse(localStorage.getItem("neobisHUBDate"));
+
   useEffect(() => {
     getData(`department/${props.match.params.id}`).then((res) => {
       setDepartment(res);
@@ -25,37 +26,33 @@ const DepartmentPage = (props) => {
 
   useEffect(() => {
     let filteredData = [];
-    if (role == "all") {
+    if (role === "all") {
       filteredData = filterData;
     } else {
-      filteredData = filterData.filter((user) => user.status == role);
+      filteredData = filterData.filter((user) => user.status === role);
     }
 
     setUsersData([...filteredData]);
-  }, [role]);
+  }, [role, filterData]);
 
-  // const getDepartment = () => {
-  //     getData(`department/${props.match.params.id}`).then((res) => {
-  //         setDepartment(res);
-  //         setLoading(true);
-  //     });
-  // };
-
-  console.log("department", department);
   return (
     <div className="wrapper">
       {loading ? (
         <>
-          <Title link={`/edit-department/${department.id}`}>
+          <Title
+            link={
+              userRights.change_department
+                ? `/edit-department/${department.id}/`
+                : false
+            }
+          >
             {department.name} департамент
           </Title>
           <div>
-            <div className="mt-4 mb-5">
-              <img
-                className="departmentIcon mb-3"
-                src={department.logo}
-                alt="PythonIcon"
-              />
+            <div className="mt-4 mb-5 department-block">
+              <div className="icon-block">
+                <img src={department.logo} alt={department.name} />
+              </div>
               <h4 className="department-name">{department.name} департамент</h4>
               <div className="d-flex mt-3">
                 <div className="head-block">
