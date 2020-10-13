@@ -1,9 +1,42 @@
-.user-project {
-    display: flex;
-    align-items: center;
+.logo-project {
+    max-width: 290px;
+    text-align: center;
 }
 
-.user-project img {
+.screenshots-block {
+    display: grid;
+    grid-gap: 1vw;
+    margin-top: 30px;
+    grid-template-columns: 1fr 1fr;
+}
+
+.screenshot-block {
+    width: 250px;
+    height: 250px;
+    position: relative;
+
+    /* margin: 10px; */
+}
+
+.screenshot {
+    width: 100%;
+    height: 100%;
+    z-index: 1;
+}
+
+.project-label label {
+    font-family: 'Montserrat-Bold';
+}
+
+.screenshot-deleteIcon {
+    right: 0;
+    z-index: 100;
+    padding: 2px;
     cursor: pointer;
-    margin-left: 10px;
+    background: #fff;
+    position: absolute;
+}
+
+.ml-200 {
+    margin-left: 200px;
 }

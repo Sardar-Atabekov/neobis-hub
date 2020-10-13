@@ -6,14 +6,44 @@
     display: flex;
 }
 
+.w-40 {
+    width: 40%;
+    margin-right: 120px;
+}
 .project-info .project-status {
     position: relative;
-    margin-left: 60px;
+    width: 130px;
+}
+
+
+
+.description-project {
+    max-width: 450px;
+    word-wrap: break-word !important;
+}
+.project-links {
+    display: flex;
+    flex-direction: column;
+}
+
+.project-links  a {
+    display: flex;
+    color:black;
+    align-items: center;
+    margin-bottom: 10px;
+}
+
+.project-links img {
+    margin-right: 15px;
+}
+.team-block {
+    display: flex;
 }
 
 .project-info img {
     width: 80px;
     height: 80px;
+    object-fit: cover;
 }
 
 .project-title-block {
@@ -35,8 +65,44 @@
 
 .team-people {
     display: flex;
-    flex-direction: column;
+    color: black;
     margin-right: 50px;
+    flex-direction: column;
+}
+
+.team-people .developer-role {
+    font-weight: 500;
+    color: rgba(0, 0, 0, 0.7);
+    font-family: 'Montserrat-Medium';
+}
+
+.team-people .developer-name {
+    font-size: 18px;
+    font-weight: 500;
+    font-family: 'Montserrat-Medium';
+}
+
+.team-people:hover {
+    color: black;
+}
+
+.more-info {
+    display: flex;
+    flex-direction: column;
+    text-align: right;
+}
+.project-screenshots {
+    display: grid;
+    grid-gap: 1vw;
+    grid-template-columns: 1fr 1fr 1fr 1fr 1fr;
+
+}
+
+.bold-p {
+    font-size: 22px;
+    font-weight: 600;
+    line-height: 170%;
+    font-family: 'Montserrat-Bold';
 }
 
 .product-owner {

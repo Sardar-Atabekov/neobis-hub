@@ -1,73 +1,62 @@
 import React, { useState, useEffect } from "react";
 import Title from "../../components/title/title";
+import Team from "./../../components/team-block/team";
+import { format, addDays, addMonths } from "date-fns";
 import Loading from "../../components/loading/loading";
 import Alert, { confirmAlert } from "../../functions/alert";
 import downloadIcon from "./../../assets/img/Group 115.png";
 import DeleteBtn from "./../../components/buttons/deleteBtn";
 import deleteIcon from "./../../assets/icons/deleteIcon.svg";
+import DatePicker, { registerLocale } from "react-datepicker";
+import { projectType } from "../../constants/status";
+import LinksBlock from "./links";
+// import deleteIcon from "./../../assets/icons/deleteIcon.svg";
 import {
   getData,
   patchData,
-  patchFilesData,
+  postFilesData,
   putFilesData,
+  deleteData,
 } from "../../functions/requests";
-// import { userRole, userStatus } from "../../constants/status";
+
 import NewDepartmentIcon from "./../../assets/icons/newDepartment.svg";
+import ruDateLocale from "date-fns/locale/ru";
 import "./edit-project.css";
-import axios from "axios";
+registerLocale("ru", ruDateLocale);
+// import axios from "axios";
 const AddProjectPage = (props) => {
   let [team, setTeam] = useState([]);
-  const [users, setUsers] = useState([]);
   const [logo, setLogo] = useState(false);
+  const [season, setSeason] = useState([]);
   const [project, setProject] = useState([]);
-  const [loading, setLoading] = useState(false);
+  const [screenshots, setScreenshots] = useState([]);
   const [downloadImg, setDownloadImg] = useState("");
-  const [loadingUsers, setLoadingUsers] = useState(false);
-
+  const [startDate, setStartDate] = useState(new Date());
+  const [finishDate, setFinishDate] = useState(new Date());
+  let [links, setLinks] = useState([{ name: "", link: "" }]);
+  const [loadingProject, setLoadingProject] = useState(false);
   const userRights = JSON.parse(localStorage.getItem("neobisHUBDate"));
-
-  useEffect(() => {
-    getData("user/").then((res) => {
-      setUsers(res);
-      setLoadingUsers(true);
-    });
-  }, []);
 
   useEffect(() => {
     getData(`project/${props.match.params.id}`).then((res) => {
       setProject(res);
       setTeam(res.team);
-      setLoading(true);
+      setLoadingProject(true);
+      setLinks(
+        res.links.length > 0
+          ? [...res.links, { name: "", link: "" }]
+          : [{ name: "", link: "" }]
+      );
+      setScreenshots(res.screenshots);
+      setStartDate(new Date(res.date_of_start));
+      setFinishDate(new Date(res.date_of_finish));
       setDownloadImg(res.logo ? res.logo : downloadIcon);
+    });
+    getData(`project/season/`).then((res) => {
+      setSeason(res);
     });
   }, [props.match.params.id]);
 
-  const AddUserTeam = () => {
-    let user = {
-      id: team.length + 1,
-      name: null,
-      user_role: null,
-    };
-
-    setTeam([...team, user]);
-  };
-
-  const changeUser = (id, value) => {
-    team[id - 1].name = value;
-    setTeam([...team]);
-  };
-
-  const changeUserRole = (id, value) => {
-    team[id - 1].user_role = value;
-    setTeam([...team]);
-  };
-
-  const deleteUser = (id) => {
-    delete team[id];
-    team = team.filter((item) => item);
-    setTeam([...team]);
-  };
-  
   const postProjectData = (e) => {
     e.preventDefault();
     let formData = new FormData(e.target),
@@ -81,20 +70,11 @@ const AddProjectPage = (props) => {
       delete item.department;
       delete item.telegram;
       item.user_role = +item.user_role;
-      item.user = users.filter((user) => {
-        console.log("item", item);
-        console.log("user", user);
-        return `${user.surname} ${user.name}` == item.name;
-      })[0].id;
-      delete item.name;
       console.log(item.user, item.user);
       console.log("item", item);
       // item.user = +item.user;
       return item;
     });
-    data.pm = users.filter(
-      (item) => `${item.surname} ${item.name}` == data.pm
-    )[0].id;
     data.team = team;
 
     if (logo) {
@@ -102,11 +82,8 @@ const AddProjectPage = (props) => {
       putFilesData(`project/logo/${project.id}/`, logoData)
         .then((response) => {
           console.log(response);
-          if (response.id) {
-            Alert("Данные проекта изменен");
-            // setTimeout(() => props.history.push(`/projects/`), 1000);
-          } else {
-            Alert(response.error ? response.error : response.detail, "error");
+          if (!response.logo) {
+            Alert("Ошибка с загрузкой логотипа", "error");
           }
         })
         .catch(() =>
@@ -127,12 +104,42 @@ const AddProjectPage = (props) => {
       );
   };
 
+  console.log(project.links);
+  const AddScreenshot = (screenshot) => {
+    const screenshotData = new FormData();
+    screenshotData.append("image", screenshot);
+    screenshotData.append("project", project.id);
+
+    postFilesData(`project/screenshot/`, screenshotData)
+      .then((response) => {
+        setScreenshots([...screenshots, response]);
+      })
+      .catch(() =>
+        confirmAlert(
+          "Ошибка при загрузке скриншота. Напишите нам, мы всё починим."
+        )
+      );
+  };
+
+  const deleteScreenshot = (id) => {
+    deleteData(`project/screenshot/delete/${id}/`)
+      .then((response) => {
+        console.log(response);
+        let arr = screenshots.filter((screenshot) => screenshot.id !== id);
+        setScreenshots([...arr]);
+      })
+      .catch(() =>
+        confirmAlert(
+          "Ошибка при удаление скриншота. Напишите нам, мы всё починим."
+        )
+      );
+  };
   return (
     <div className="wrapper">
       <Title>Редактирования проекта </Title>
-      {loading && loadingUsers ? (
+      {loadingProject ? (
         <form className="flex-block" onSubmit={postProjectData}>
-          <div className="mr-5 input-blocks">
+          <div className="mr-5 input-blocks project-label">
             <div className="new-department-title-block mb-3">
               <img
                 src={NewDepartmentIcon}
@@ -140,7 +147,7 @@ const AddProjectPage = (props) => {
                 className="mr-3"
               />
               <span className="new-department-title">
-                Редактирования проекта{" "}
+                Редактирование проекта
               </span>
             </div>
             <div className="form-group">
@@ -174,112 +181,102 @@ const AddProjectPage = (props) => {
               />
             </div>
             <div className="form-group">
-              <label htmlFor="pm">ПМ</label>
-              <select
-                className="select form-control"
-                name="pm"
-                id="pm"
-                defaultValue={project.pm_name}
-              >
-                <option value="" disabled>
-                  Выберите пользователя
-                </option>
-                {users.map((item) => (
-                  <option key={item.id} value={`${item.surname} ${item.name}`}>
-                    {`${item.surname} ${item.name}`}
-                  </option>
-                ))}
-              </select>
+              <label htmlFor="progress">Прогресс</label>
+              <input
+                type="number"
+                name="progress"
+                defaultValue={project.progress}
+                className="form-control"
+                id="progress"
+              />
             </div>
             <div className="form-group d-flex">
               <div className="w-50 mr-3">
                 <label htmlFor="date_of_start">Дата начала </label>
                 <br />
-                <input
-                  type="text"
-                  name="date_of_start"
+                <DatePicker
+                  locale="ru"
                   className="form-control"
-                  placeholder="2000-11-11"
-                  id="date_of_start"
-                  defaultValue={project.date_of_start}
+                  dateFormat="dd/MM/yyyy"
+                  placeholderText="2000-11-11"
+                  maxDate={addDays(new Date(finishDate), -1)}
+                  selected={new Date(startDate)}
+                  onSelect={(date) => {
+                    setStartDate(format(new Date(date), "yyyy-MM-dd"));
+                  }}
                 />
               </div>
               <div className="w-50">
                 <label htmlFor="date_of_finish">Дата завершения</label>
                 <br />
 
-                <input
-                  type="text"
-                  name="date_of_finish"
-                  placeholder="2000-12-20"
+                <DatePicker
+                  locale="ru"
                   className="form-control"
-                  defaultValue={project.date_of_finish}
-                  id="date_of_finish"
+                  dateFormat="dd/MM/yyyy"
+                  placeholderText="2000-11-11"
+                  selected={new Date(finishDate)}
+                  minDate={addDays(new Date(startDate), 1)}
+                  onSelect={(date) => {
+                    setFinishDate(format(new Date(date), "yyyy-MM-dd"));
+                  }}
                 />
               </div>
             </div>
             <div className="form-group">
-              <label htmlFor="status">Статус</label>
+              <label htmlFor="season">Сезон</label>
               <br />
-              <select id="status" className="select form-control" name="status">
-                <option value="a">Активный</option>
-                <option value="f">Заморожен</option>
-                <option value="s">Завершенный</option>
+              <select
+                id="season"
+                className="select form-control"
+                name="season"
+                defaultValue={project.season ? project.season : ""}
+              >
+                <option value="" disabled>
+                  Выберите сезон проекта
+                </option>
+                {season.map((item) => (
+                  <option value={item.id} key={item.id}>
+                    {item.name}
+                  </option>
+                ))}
               </select>
             </div>
-            <div className="mt-2">
-              <label htmlFor="description">Пользователи в проекте</label>
-              <br />
-              {team.map((item, i) => (
-                <div key={i} className="user-project">
-                  <div className="form-group w-100">
-                    <label>Пользователь {i + 1}</label>
-                    <br />
-                    <select
-                      className="select form-control"
-                      onChange={(e) => changeUser(i + 1, e.target.value)}
-                      defaultValue={item.name ? item.name : ""}
-                    >
-                      <option value="" disabled>
-                        Выберите пользователя
-                      </option>
-                      {users.map((user) => (
-                        <option
-                          key={user.id}
-                          value={`${user.surname} ${user.name}`}
-                        >
-                          {`${user.surname} ${user.name}`}
-                        </option>
-                      ))}
-                    </select>
-
-                    <select
-                      className="select  form-control mt-3"
-                      defaultValue={item.user_role ? item.user_role : ""}
-                      onChange={(e) => changeUserRole(i + 1, e.target.value)}
-                    >
-                      <option value="" disabled>
-                        Выберите роль
-                      </option>
-                      <option value={1}>Front-End разработчик</option>
-                      <option value={2}>Backend разработчик</option>
-                      <option value={3}>Дизайнер</option>
-                      <option value={4}>IOS разработчик</option>
-                      <option value={5}>Android разработчик</option>
-                    </select>
-                  </div>
-                  <div>
-                    <img src={deleteIcon} onClick={() => deleteUser(i)} />
-                  </div>
-                </div>
-              ))}
-              <div
-                onClick={AddUserTeam}
-                className="btn btnSumbit btnUser add-btn"
+            <div className="form-group">
+              <label htmlFor="type">Тип проекта</label>
+              <select
+                id="type"
+                className="select form-control"
+                defaultValue={project.project_type}
+                required
+                name="project_type"
               >
-                Добавить пользователя
-              </div>
+                <option value="" disabled>
+                  Выберите тип проекта
+                </option>
+                {Object.entries(projectType).map((item) => (
+                  <option value={item[0]} key={item[0]}>
+                    {item[1]}
+                  </option>
+                ))}
+              </select>
             </div>
+            <div className="form-group">
+              <label htmlFor="status">Статус</label>
+              <br />
+              <select
+                id="status"
+                className="select form-control"
+                name="status"
+                defaultValue={project.status}
+              >
+                <option value="a">Активный</option>
+                <option value="f">Заморожен</option>
+                <option value="c">Завершенный</option>
+              </select>
+            </div>
+            <Team team={team} setTeam={setTeam} pmID={project.pm} />
+
             <div className="button-block">
               {userRights.add_project ? (
                 <DeleteBtn
@@ -293,9 +290,9 @@ const AddProjectPage = (props) => {
 
               <input type="submit" className="btn add-btn" value="Сохранить" />
             </div>
-          </div>{" "}
-          <div>
-            <div className="text-center">
+          </div>
+          <div className="ml-200">
+            <div className="logo-project">
               <label htmlFor="logo" className="text-center">
                 <img
                   src={downloadImg}
@@ -316,6 +313,41 @@ const AddProjectPage = (props) => {
                 <span>Загрузить логотип</span>
               </label>
             </div>
+            <div className="screenshots-block">
+              {screenshots.map((screenshot) => (
+                <div className="screenshot-block" key={screenshot.id}>
+                  <img
+                    src={screenshot.image}
+                    alt={screenshot.id}
+                    className="screenshot"
+                  />
+                  <img
+                    src={deleteIcon}
+                    alt="deleteIcon"
+                    onClick={() => deleteScreenshot(screenshot.id)}
+                    className="screenshot-deleteIcon"
+                  />
+                </div>
+              ))}
+            </div>
+            <div className="text-center mt-4">
+              <input
+                type="file"
+                id="screenshot"
+                className="d-none"
+                onChange={(e) => {
+                  AddScreenshot(e.target.files[0]);
+                }}
+              />
+              <label htmlFor="screenshot" className="download-text">
+                <span>Загрузить скриншоты</span>
+              </label>
+            </div>
+            <LinksBlock
+              setLinks={setLinks}
+              links={links}
+              projectId={project.id}
+            />
           </div>
         </form>
       ) : (

@@ -1,4 +1,4 @@
-let userRole = { h: "Мембер", m: "Ментор", t: "Тимлид" };
+let userStatus = { h: "Мембер", n: "Мембер", m: "Ментор", t: "Тимлид" };
 
 let congestionStatus = {
   0: "Свободен",
@@ -21,17 +21,11 @@ let projectType = {
   4: "Продукт",
 };
 
-let projectUserRole = {
-  1: "Front-End разработчик",
-  2: "Backend разработчик",
-  3: "Дизайнер",
-  4: "IOS разработчик",
-  5: "Android разработчик",
+let userRole = {
+  3: "Тимлид",
+  1: "Менеджер клуба",
+  2: "Координатор проектов",
+  5: "Обычный пользователь",
 };
-export {
-  userRole,
-  congestionStatus,
-  projectStatus,
-  projectType,
-  projectUserRole,
-};
+
+export { userStatus, congestionStatus, projectStatus, projectType, userRole };

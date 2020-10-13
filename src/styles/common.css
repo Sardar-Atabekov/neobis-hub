@@ -32,7 +32,7 @@
 
 .flex-block {
     display: flex;
-    padding-top: 40px;
+    padding-top: 30px;
 }
 
 .input-blocks {
@@ -43,6 +43,33 @@
 .download-img {
     width: 200px;
     margin: 20px;
-    margin-top: 0px;
     height: 200px;
+    margin-top: 0px;
+    object-fit: cover;
+}
+
+.user-name {
+    font-size: 26px;
+    margin-top: 10px;
+    line-height: 27px;
+    font-family: 'Montserrat-Bold';
+}
+
+.form-group label {
+    font-family: 'Montserrat-Bold';
+}
+
+.user-departmentName {
+    font-size: 18px;
+    font-family: 'Montserrat-Bold';
+}
+
+.user-status {
+    font-size: 18px;
+    color: #808080;
+    line-height: 22px;
+    font-weight: bold;
+    text-transform: capitalize;
+    font-family: "Montserrat-Bold";
+
 }

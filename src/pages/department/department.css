@@ -1,9 +1,10 @@
 .department-name {
-    font-weight: 500;
     font-size: 28px;
-    line-height: 34px;
     margin-top: 15px;
-    font-family: 'Montserrat-Medium';
+    font-weight: 600;
+    line-height: 34px;
+    text-transform: uppercase;
+    font-family: 'Montserrat-Bold';
 }
 
 .department-users {
@@ -12,7 +13,7 @@
     padding-top: 20px;
 }
 
-.department-users span {
+.list-users {
     font-family: 'Montserrat-medium';
     font-weight: 500;
     font-size: 22px;
@@ -28,11 +29,33 @@
 }
 
 .head-name {
-    font-family: 'Montserrat-medium';
+    font-family: 'Montserrat-Bold';
     font-weight: 600;
     font-size: 22px;
     line-height: 27px;
     margin-top: 5px;
+}
+
+.department-block {
+    display: flex;
+    padding: 20px 30px;
+    border-radius: 10px;
+    /* color: #fff !important; */
+    /* background: rgb(7, 183, 85); */
+    justify-content: space-between;
+}
+
+.counts span {
+    font-weight: 500;
+    font-size: 18px;
+    line-height: 22px;
+    /* color: #fff !important; */
+    color: rgba(0, 0, 0, 0.8);
+}
+
+.department-background img {
+    height: 200px;
+    margin-right: 100px;
 }
 
 .department-block .icon-block {
@@ -45,13 +68,15 @@
     height: 40px;
 }
 
-.counts {
-    margin-top: 10px;
+.department-users .filters-iconBlock {
+    justify-content: space-between;
 }
 
-.counts span {
-    font-weight: 500;
+.counts {
     font-size: 18px;
+    margin-top: 10px;
+    font-weight: 600;
     line-height: 22px;
     color: rgba(0, 0, 0, 0.8);
+    font-family: 'Montserrat-Bold';
 }

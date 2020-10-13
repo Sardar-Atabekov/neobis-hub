@@ -8,6 +8,7 @@
     color: var(--mainColor);
     display: flex;
     justify-content: space-between;
+    align-items: center;
 }
 
 .line {

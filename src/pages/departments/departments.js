@@ -33,8 +33,16 @@ const DepartmentsPage = () => {
   console.log(departments);
   return (
     <div className="wrapper">
-      <Title>Департаменты</Title>
-      {userRights.add_department ? <AddBtn url="add-department" /> : null}
+      <Title
+        mt={"mt-3"}
+        component={
+          userRights.add_department ? (
+            <AddBtn url="add-department" className="m-0" />
+          ) : null
+        }
+      >
+        Департаменты
+      </Title>
       {loading ? (
         <div className="grid">
           {departments.map((department, i) => (
@@ -49,7 +57,7 @@ const DepartmentsPage = () => {
                 <div className="icon-block">
                   <img src={department.logo} alt={department.name} />
                 </div>
-                <h4>{department.name} department</h4>
+                <h4 className="mt-1">{department.name} department</h4>
                 <span className="people-count">{department.count} человек</span>
                 <div className="counts-department">
                   <span className="mentor_count">

@@ -1,0 +1,14 @@
+.study-plans {
+    display: flex;
+    width: 300px;
+    margin: auto 60px 1.5em 60px;
+}
+
+.ps-20 {
+    position: relative;
+    margin-bottom: -13px;
+}
+
+.study-plans {
+    min-height: 250px;
+}

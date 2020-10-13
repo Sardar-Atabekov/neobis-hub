@@ -3,13 +3,12 @@ import { getData } from "../../functions/requests";
 import Title from "./../../components/title/title";
 import pmIcon from "./../../assets/icons/pmIcon.svg";
 import Loading from "../../components/loading/loading";
-import truckIcon from "./../../assets/icons/truck.svg";
+import downloadIcon from "./../../assets/img/Group 115.png";
 import { projectType, projectStatus } from "./../../constants/status";
 import { Link } from "react-router-dom";
 import "./projects.css";
 
-const ProjectsPage = () => {
-  const [page, setPage] = useState(1);
+const ProjectsPage = (props) => {
   const [total, setTotal] = useState("");
   const [type, setType] = useState("false");
   const [projects, setProjects] = useState([]);
@@ -17,20 +16,26 @@ const ProjectsPage = () => {
   const [status, setStatus] = useState("false");
   const [season, setSeason] = useState("false");
   const [searchText, setSearchText] = useState("");
+  const [seasonData, setSeasonData] = useState([]);
+  const [page, setPage] = useState(props.match.params.page);
   const userRights = JSON.parse(localStorage.getItem("neobisHUBDate"));
 
   useEffect(() => {
     setLoading(false);
+    setPage(props.match.params.page);
     getData(
       `project/?${status !== "false" ? `status=${status}&&` : ""}page=${page}${
-        type !== "false" ? `&&type=${type}` : ""
+        type !== "false" ? `&&project_type=${type}` : ""
       }${season !== "false" ? `&&season=${season}` : ""}${
         searchText && `&&search=${searchText}`
-      }`
+      }&page_size=9`
     ).then((res) => {
       setProjects(res.results);
       setTotal(res.count);
       setLoading(true);
+    });
+    getData(`project/season/`).then((res) => {
+      setSeasonData(res);
     });
   }, [type, season, status, searchText, page]);
 
@@ -39,16 +44,17 @@ const ProjectsPage = () => {
       pages = Math.ceil(total / 9);
     for (let i = 1; i <= pages; i++) {
       buttons.push(
-        <button
+        <Link
+          to={`/projects/${i}/`}
           key={i}
-          className={i === page ? "btn pg-btn active-btn " : "btn pg-btn"}
+          className={i === +page ? "btn pg-btn active-btn " : "btn pg-btn"}
           onClick={() => {
             setPage(i);
             setLoading(false);
           }}
         >
           {i}
-        </button>
+        </Link>
       );
     }
     return buttons;
@@ -94,11 +100,11 @@ const ProjectsPage = () => {
             onChange={(e) => setSeason(e.target.value)}
           >
             <option value="false">Сезоны</option>
-            <option value="1">1</option>
-            <option value="2">2</option>
-            <option value="3">3</option>
-            <option value="4">4</option>
-            <option value="5">5</option>
+            {seasonData.map((item) => (
+              <option key={item.id} value={item.id}>
+                {item.name}
+              </option>
+            ))}
           </select>
         </div>
         {userRights.add_project ? (
@@ -110,46 +116,49 @@ const ProjectsPage = () => {
       {loading ? (
         <>
           <div className="grid">
-            {projects.map((project) => (
-              <Link
-                to={`/project/${project.id}/`}
-                key={project.id}
-                className="project"
-              >
-                <div className="flex-start project-block mb-1">
-                  <img
-                    src={project.logo ? project.logo : truckIcon}
-                    alt="Cargo truck"
-                    className="projectIcon"
-                  />
-                  <div className="project-description text-left">
-                    <h5 className="project-name">{project.name}</h5>
-                    <span className="project-span">
-                      {projectType[project.project_type]}
-                    </span>
-                    <span className="pmIcon">
-                      <img src={pmIcon} alt="pm department icon" />
-                    </span>
-                    <span className="project-span">Проектный менеджер</span>
-                    <p className="project-pm">
-                      {project.pm.name} {project.pm.surname}{" "}
-                    </p>
-                  </div>
-                  <span
-                    className={`project-status ${
-                      project.status ? project.status : "a"
-                    }`}
+            {projects.length > 0
+              ? projects.map((project) => (
+                  <Link
+                    to={`/project/${project.id}/`}
+                    key={project.id}
+                    className="project"
                   >
-                    {project.status
-                      ? projectStatus[project.status]
-                      : "Активный"}
-                  </span>
-                </div>
-                <div className="line-status">
-                  <span className="percentage">100%</span>
-                </div>
-              </Link>
-            ))}
+                    <div className="flex-start project-block mb-1">
+                      <img
+                        src={project.logo ? project.logo : downloadIcon}
+                        alt="Cargo truck"
+                        className="projectIcon"
+                      />
+                      <div className="project-description text-left">
+                        <h5 className="project-name">{project.name}</h5>
+                        <span className="project-span">
+                          {projectType[project.project_type]}
+                        </span>
+                        <span className="userRole-icon">
+                          <img src={pmIcon} alt="pm department icon" />
+                        </span>
+                        <span className="project-span">Проектный менеджер</span>
+                        <p className="project-pm">{project.pm}</p>
+                      </div>
+                      <span
+                        className={`project-status ${
+                          project.status ? project.status : "a"
+                        }`}
+                      >
+                        {project.status
+                          ? projectStatus[project.status]
+                          : "Активный"}
+                      </span>
+                    </div>
+                    <div className="line-status">
+                      <span className="percentage">
+                        {/* {project.progress}  */}
+                        100%
+                      </span>
+                    </div>
+                  </Link>
+                ))
+              : "Нет данных по этим параметрам"}
           </div>
           {total > 9 ? (
             <div className="pagination-block">{createPage()}</div>

@@ -1,12 +1,17 @@
 import Swal from "sweetalert2";
 import { deleteData } from "./../functions/requests";
-function Alert(title, icon = "success", confirmBtnColor = "#32b482") {
-  Swal.fire({
+function Alert(
+  title,
+  icon = "success",
+  confirmBtnColor = "#32b482",
+  time = 2000
+) {
+  return Swal.fire({
     showConfirmButton: true,
     icon: icon,
     width: 500,
     title: title,
-    timer: 2000,
+    timer: time,
     confirmButtonColor: confirmBtnColor,
     // confirmButtonText: "ок",
   });

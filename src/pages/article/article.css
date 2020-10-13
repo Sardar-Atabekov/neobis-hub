@@ -1,14 +1,17 @@
-
 .article {
     max-width: 60%;
+    position: relative;
     padding: 30px 0 50px 0;
 }
+
 .article-title {
     font-family: "Montserrat-Bold";
 }
 
 .article-BgImg {
     width: 100%;
+    height: 100%;
+    object-fit: cover;
     max-height: 400px;
     margin: 10px 0px 25px 0;
 }
@@ -16,5 +19,13 @@
 .article-text {
     font-size: 16px;
     line-height: 170%;
-    padding-right: 100px;
+    padding-right: 80px;
+}
+
+.article-text img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    max-height: 400px;
+    margin: 10px 0px 25px 0;
 }

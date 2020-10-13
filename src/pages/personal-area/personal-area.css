@@ -1,6 +1,7 @@
 .tab-block {
     border-bottom: 1.5px solid rgba(0, 0, 0, 0.2);
     padding: 20px 0;
+    font-family: "Montserrat-bold";
 }
 
 
@@ -8,6 +9,8 @@
     background: #F8F8F8;
     padding-right: 0 !important;
     padding-top: 0 !important;
+    font-family: "Montserrat-Medium";
+
 }
 
 .tab-block span {
@@ -32,6 +35,11 @@
     height: 100%;
 }
 
+
+.personal-block .userRole-icon img {
+    width: 100%;
+}
+
 .w-60 {
     width: 60%;
     padding-top: 10px;
@@ -50,17 +58,22 @@
 
 .personalTitle-block {
     display: flex;
-    margin-top: 10px;
     padding: 15px 0;
-    justify-content: space-between;
+    font-size: 18px;
+    color: #777777;
+    margin-top: 10px;
     align-items: center;
+    justify-content: space-between;
+    font-family: "Montserrat-bold";
     border-bottom: 1.5px solid rgba(0, 0, 0, 0.2);
 }
+
 
 .userPhoto {
     width: 120px;
     height: 120px;
     margin: 20px 0;
+    border-radius: 50%;
 }
 
 .photo-block {
@@ -70,8 +83,8 @@
 
 .contacts-block {
     display: flex;
-    flex-direction: column;
     padding: 20px 0;
+    flex-direction: column;
     border-bottom: 1px solid rgba(0, 0, 0, 0.2);
 }
 
@@ -79,6 +92,59 @@
     margin-bottom: 5px;
 }
 
-.contacts-block img {
+.contact-block {
+    display: flex;
+    margin-top: 8px;
+    color: #808080;
+    justify-content: flex-start;
+}
+
+.noProject-text {
+    width: 100%;
+    padding: 15px;
+    color: #fff;
+    background: radial-gradient(123.29% 7345.85% at 8.83% 17.5%, #27C085 0%, #34DCA0 0.01%, #1B91AA 100%);
+    border-radius: 15px;
+}
+
+.noProject-text  h1 {
+    font-family: "Montserrat-Bold";
+}
+
+.noProject-text {
+    font-family: "Montserrat-Medium";
+}
+.contact-block:hover {
+    color: #808080;
+}
+
+.contact-block a {
+    color: #808080;
+}
+
+.contact-block img {
+    width: 23px;
+    height: 26px;
     margin-right: 10px;
+}
+
+.user-picture {
+    position: relative;
+}
+
+.user-department {
+    left: 90px;
+    max-width: 44px;
+    z-index: 100;
+    max-height: 44px;
+    bottom: 20px;
+    padding: 5px;
+    background: #fff;
+    border-radius: 50%;
+    position: absolute;
+    border: 1px solid rgba(7, 183, 85, 0.1);
+}
+
+.user-department img {
+    width: 100%;
 }

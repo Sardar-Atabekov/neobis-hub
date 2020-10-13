@@ -21,7 +21,9 @@ import { Route, Switch, BrowserRouter } from "react-router-dom";
 import PersonalEditPage from "./pages/personal-edit/personal-edit";
 import AddDepartmentPage from "./pages/add-department/add-department";
 import ChangePasswordPage from "./pages/change-password/change-password";
+import ForgetPasswordPage from "./pages/forget-password/forget-password";
 import EditDepartmentPage from "./pages/edit-department/edit-department";
+import PasswordRecoveryPage from "./pages/password-recovery/password-recovery";
 
 function App() {
   return (
@@ -31,19 +33,24 @@ function App() {
           {localStorage.getItem("neobisHUBDate") ? <NavBar /> : null}
           <Switch>
             <Route path="/" exact component={LoginPage} />
-            <Route path="/news/" exact component={NewsPage} />
             <Route path="/users/" exact component={UsersPage} />
             <Route path="/user/:id/" exact component={UserPage} />
+            <Route path="/news/:page" exact component={NewsPage} />
             <Route path="/add-user/" exact component={AddUserPage} />
             <Route path="/add-news/" exact component={AddNewsPage} />
-            <Route path="/projects/" exact component={ProjectsPage} />
             <Route path="/project/:id/" exact component={ProjectPage} />
             <Route path="/article/:id/" exact component={ArticlePage} />
             <Route path="/personal/:id/" exact component={PersonalPage} />
             <Route path="/add-project/" exact component={AddProjectPage} />
             <Route path="/edit-user/:id/" exact component={EditUserPage} />
             <Route path="/departments/" exact component={DepartmentsPage} />
+            <Route path="/projects/:page/" exact component={ProjectsPage} />
             <Route path="/department/:id/" exact component={DepartmentPage} />
+            <Route
+              path="/forget-password/"
+              exact
+              component={ForgetPasswordPage}
+            />
             <Route
               path="/add-department/"
               exact
@@ -60,10 +67,16 @@ function App() {
               component={EditArticlePage}
             />
             <Route
+              path="/change-password/:id/"
+              exact
+              component={ChangePasswordPage}
+            />
+            <Route
               path="/personal-edit/:id/"
               exact
               component={PersonalEditPage}
             />
+
             <Route
               path="/change-password/:id/"
               exact
@@ -74,8 +87,12 @@ function App() {
               exact
               component={EditDepartmentPage}
             />
+             <Route
+              path="/password-recovery/:id/"
+              exact
+              component={PasswordRecoveryPage}
+            />
             <Route path="*" exact component={NotFoundPage} />
-
           </Switch>
         </div>
       </React.Fragment>

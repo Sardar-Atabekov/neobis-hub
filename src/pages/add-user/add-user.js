@@ -29,16 +29,15 @@ const AddUserPage = (props) => {
       data[key] = value;
     });
 
-    data.department = +data.department;
-    console.log(data);
+    // data.role = 5;
     postData("user/create/", data)
       .then((response) => {
         console.log("response", response);
-        if (response.message) {
+        if (response.Message === "Пользователь успешно создан") {
           Alert("Пользователь добавлен");
           setTimeout(() => props.history.push(`/users/`), 1000);
         } else {
-          Alert(response.detail ? response.detail : response, "error");
+          Alert(response.Message, 'error');
         }
       })
       .catch(() =>
@@ -82,12 +81,22 @@ const AddUserPage = (props) => {
             </select>
           </div>
           <div className="form-group">
-            <label htmlFor="status">Статус</label>
+            <label htmlFor="status">Роль</label>
             <br />
             <select id="status" className="select form-control" name="status">
               <option value="h">Мембер</option>
               <option value="m">Ментор</option>
               <option value="t">Тимлид</option>
+            </select>
+          </div>
+          <div className="form-group">
+            <label htmlFor="role">Права</label>
+            <br />
+            <select id="role" className="select form-control" name="role" defaultValue="4">
+              <option value="1">Менеджер клуба</option>
+              <option value="2">Координатор проектов</option>
+              <option value="3">Тимлид</option>
+              <option value="4">Обычный пользователь</option>
             </select>
           </div>
           <div className="text-right">

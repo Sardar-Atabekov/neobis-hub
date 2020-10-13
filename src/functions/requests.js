@@ -23,7 +23,7 @@ const tokenHeader = {
   Authorization: "Token " + token,
 };
 async function getData(url) {
-  let response = await fetch(`${API}${url}`, {
+  let response = await fetch(`${API}/${url}`, {
     method: "GET",
     headers,
   });
@@ -32,7 +32,7 @@ async function getData(url) {
 }
 
 async function postData(url, data) {
-  let req = await fetch(`${API}${url}`, {
+  let req = await fetch(`${API}/${url}`, {
     method: "POST",
     headers,
     body: JSON.stringify(data),
@@ -42,7 +42,7 @@ async function postData(url, data) {
 }
 
 async function postFilesData(url, data) {
-  let req = await fetch(`${API}${url}`, {
+  let req = await fetch(`${API}/${url}`, {
     method: "POST",
     headers: tokenHeader,
     body: data,
@@ -51,7 +51,7 @@ async function postFilesData(url, data) {
   return res;
 
   // let req = await axios
-  //   .post(`${API}${url}`, data, {
+  //   .post(`${API}/${url}`, data, {
   //     headers: {
   //       "Content-Type":
   //         "multipart/form-data; boundary=<calculated when request is sent>",
@@ -65,7 +65,7 @@ async function postFilesData(url, data) {
 
 async function putData(url, data) {
   console.log(JSON.stringify(data));
-  let req = await fetch(`${API}${url}`, {
+  let req = await fetch(`${API}/${url}`, {
     method: "PUT",
     headers,
     body: JSON.stringify(data),
@@ -76,7 +76,7 @@ async function putData(url, data) {
 
 async function patchData(url, data) {
   console.log(JSON.stringify(data));
-  let req = await fetch(`${API}${url}`, {
+  let req = await fetch(`${API}/${url}`, {
     method: "PATCH",
     headers,
     body: JSON.stringify(data),
@@ -86,14 +86,14 @@ async function patchData(url, data) {
 }
 
 async function patchFilesData(url, data) {
-  // let req = await fetch(`${API}${url}`, {
+  // let req = await fetch(`${API}/${url}`, {
   //   method: "PATCH",
   //   headers: tokenHeader,
   //   body: data,
   // });
   // const res = await req.json();
   // return res;
-  let req = await axios.patch(`${API}${url}`, data, {
+  let req = await axios.patch(`${API}/${url}`, data, {
     headers: headersFiles,
   });
   const res = await req.data;
@@ -101,7 +101,7 @@ async function patchFilesData(url, data) {
 }
 
 async function putFilesData(url, data) {
-  let req = await axios.put(`${API}${url}`, data, {
+  let req = await axios.put(`${API}/${url}`, data, {
     headers: headersFiles,
   });
   const res = await req.data;
@@ -109,7 +109,7 @@ async function putFilesData(url, data) {
 }
 
 async function deleteData(url, data = "") {
-  let result = await fetch(`${API}${url}`, {
+  let result = await fetch(`${API}/${url}`, {
     method: "DELETE",
     headers,
     body: JSON.stringify(data),
@@ -119,7 +119,7 @@ async function deleteData(url, data = "") {
 }
 
 async function postDataNoToken(url, data) {
-  let req = await fetch(`${API}${url}`, {
+  let req = await fetch(`${API}/${url}`, {
     method: "POST",
     headers: {
       Accept: "application/json",
@@ -132,7 +132,7 @@ async function postDataNoToken(url, data) {
 }
 
 async function getDataNoToken(url) {
-  let response = await fetch(`${API}${url}`, {
+  let response = await fetch(`${API}/${url}`, {
     method: "GET",
     headers: {
       Accept: "application/json",

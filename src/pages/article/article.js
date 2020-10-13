@@ -1,7 +1,11 @@
 import React, { useState, useEffect } from "react";
 import Title from "../../components/title/title";
 import { getData } from "../../functions/requests";
+import { TimeFormat } from "./../../functions/time";
 import Loading from "../../components/loading/loading";
+import ImgBlock from "./../../components/img-block/img-block";
+import Interweave from "interweave";
+
 import "./article.css";
 const ArticlePage = (props) => {
   const [article, setArticle] = useState([]);
@@ -24,14 +28,18 @@ const ArticlePage = (props) => {
       </Title>
       {loading ? (
         <div className="article">
-          <span className="article-time">14.02.2020</span>
-          <h1 className="article-title">{article.name}</h1>
-          <img
+          <span className="article-time">
+            {TimeFormat(article.date_of_create)}
+          </span>
+          <h1 className="article-title mt-3">{article.name}</h1>
+          <ImgBlock
             src={article.picture}
             className="article-BgImg"
             alt={article.name}
           />
-          <div className="article-text">{article.text}</div>
+          <div className="article-text">
+            <Interweave content={article.text} />
+          </div>
         </div>
       ) : (
         <Loading />

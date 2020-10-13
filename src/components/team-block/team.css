@@ -1,0 +1,9 @@
+.user-project {
+    display: flex;
+    align-items: center;
+}
+
+.user-project img {
+    cursor: pointer;
+    margin-left: 10px;
+}

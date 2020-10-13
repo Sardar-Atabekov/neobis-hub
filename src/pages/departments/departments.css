@@ -2,7 +2,7 @@
     display: flex;
     border-radius: 10px;
     background: #115EF8;
-
+    max-height: 215px;
     width: 380px;
     padding: 15px;
     color: #fff;
@@ -20,6 +20,8 @@
 .bgDepartment {
     width: 140px;
     margin: 5px 0;
+    max-height: 170px;
+
 }
 
 .counts-department {
@@ -32,14 +34,13 @@
 }
 
 .icon-block {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    background: #FFFFFF;
-    border-radius: 10px;
     width: 40px;
     padding: 5px;
-    margin-bottom: 10px;
+    display: flex;
+    border-radius: 10px;
+    align-items: center;
+    background: #FFFFFF;
+    justify-content: center;
 }
 
 .icon-block img {

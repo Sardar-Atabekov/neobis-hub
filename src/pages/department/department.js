@@ -1,8 +1,9 @@
 import React, { useEffect, useState } from "react";
 import { getData } from "../../functions/requests";
 import Title from "./../../components/title/title";
-import { userRole } from "./../../constants/status";
+import { userStatus } from "./../../constants/status";
 import Loading from "../../components/loading/loading";
+import sortsIcon from "./../../assets/icons/Polygon 5.png";
 import { Link } from "react-router-dom";
 import { Table } from "reactstrap";
 import "./department.css";
@@ -13,6 +14,9 @@ const DepartmentPage = (props) => {
   const [loading, setLoading] = useState(false);
   const [department, setDepartment] = useState([]);
   const [filterData, setFilterData] = useState([]);
+  const [sortActiveProjects, setSortActiveProjects] = useState(false);
+  const [sortFinishedProjects, setSortFinishedProjects] = useState(false);
+
   const userRights = JSON.parse(localStorage.getItem("neobisHUBDate"));
 
   useEffect(() => {
@@ -35,6 +39,28 @@ const DepartmentPage = (props) => {
     setUsersData([...filteredData]);
   }, [role, filterData]);
 
+  useEffect(() => {
+    let filteredUsers = users.sort(
+      (a, b) => a.active_projects_count - b.active_projects_count
+    );
+    filteredUsers = sortActiveProjects
+      ? filteredUsers
+      : filteredUsers.reverse();
+    setUsersData(filteredUsers);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [sortActiveProjects]);
+
+  useEffect(() => {
+    let filteredUsers = users.sort(
+      (a, b) => a.finished_projects_count - b.finished_projects_count
+    );
+    filteredUsers = sortFinishedProjects
+      ? filteredUsers
+      : filteredUsers.reverse();
+    setUsersData(filteredUsers);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [sortFinishedProjects]);
+
   return (
     <div className="wrapper">
       {loading ? (
@@ -49,28 +75,35 @@ const DepartmentPage = (props) => {
             {department.name} департамент
           </Title>
           <div>
-            <div className="mt-4 mb-5 department-block">
-              <div className="icon-block">
-                <img src={department.logo} alt={department.name} />
-              </div>
-              <h4 className="department-name">{department.name} департамент</h4>
-              <div className="d-flex mt-3">
-                <div className="head-block">
-                  <span>Тимлид департамента:</span>
-                  <span className="head-name">{department.head_name}</span>
+            <div className="mt-2 mb-2 department-block">
+              <div>
+                <div className="icon-block">
+                  <img src={department.logo} alt={department.name} />
                 </div>
-                <div>
-                  <span>{department.count} человек</span>
-                  <div className="counts">
-                    <span className="mr-5">
-                      Менторы: {department.mentor_count}{" "}
-                    </span>
+                <h4 className="department-name">
+                  {department.name} департамент
+                </h4>
+                <div className="d-flex mt-3">
+                  <div className="head-block">
+                    <span>Тимлид департамента:</span>
+                    <span className="head-name">{department.head_name}</span>
+                  </div>
+                  <div>
+                    <span>{department.count} человек</span>
+                    <div className="counts">
+                      <span className="mr-5">
+                        Менторы: {department.mentor_count}{" "}
+                      </span>
+                    </div>
                   </div>
                 </div>
               </div>
+              <div className="department-background">
+                <img src={department.background} alt="background img" />
+              </div>
             </div>
             <div className="department-users">
-              <span>Список участников </span>
+              <span className="list-users">Список участников </span>
               <Table striped className={"mb-5 mt-4 table-3 tables"}>
                 <thead>
                   <tr>
@@ -86,33 +119,61 @@ const DepartmentPage = (props) => {
                       <option value="t">Тимлид</option>
                     </select>
                     <th className={"thead-item"}>Номер телефона</th>
-                    <th className={"thead-item"}>Активные проекты</th>
-                    <th className={"thead-item"}>Завершенные</th>
+                    <th className={"thead-item"}>
+                      <div className="filters-iconBlock">
+                        <span>Активные проекты </span>
+                        <img
+                          src={sortsIcon}
+                          alt="filtersIcon"
+                          onClick={() =>
+                            setSortActiveProjects(!sortActiveProjects)
+                          }
+                        />
+                      </div>
+                    </th>
+                    <th className={"thead-item"}>
+                      <div className="filters-iconBlock">
+                        <span className="mr-1">Завершенные</span>
+                        <img
+                          src={sortsIcon}
+                          alt="filtersIcon"
+                          onClick={() =>
+                            setSortFinishedProjects(!sortFinishedProjects)
+                          }
+                        />
+                      </div>
+                    </th>
                   </tr>
                 </thead>
                 <tbody className={"tbody"}>
-                  {users.map((user) => (
-                    <tr key={user.id}>
-                      <td data-th="Ф.И.О" className={"tbody-item"}>
-                        <Link to={`/user/${user.id}/`}>
-                          {user.name ? user.name : user.email} {user.surname}
-                        </Link>
-                      </td>
+                  {users.length > 0 ? (
+                    users.map((user) => (
+                      <tr key={user.id}>
+                        <td data-th="Ф.И.О" className={"tbody-item"}>
+                          <Link to={`/user/${user.id}/`}>
+                            {user.name ? user.name : user.email} {user.surname}
+                          </Link>
+                        </td>
 
-                      <td data-th="role" className={"tbody-item"}>
-                        {userRole[user.status]}
-                      </td>
-                      <td data-th="Номер телефона" className={"tbody-item"}>
-                        {user.phone}
-                      </td>
-                      <td data-th="Номер телефона" className={"tbody-item"}>
-                        {user.active_projects_count}
-                      </td>
-                      <td data-th="Номер телефона" className={"tbody-item"}>
-                        {user.finished_projects_count}
-                      </td>
+                        <td data-th="role" className={"tbody-item"}>
+                          {userStatus[user.status]}
+                        </td>
+                        <td data-th="Номер телефона" className={"tbody-item"}>
+                          {user.phone}
+                        </td>
+                        <td data-th="Номер телефона" className={"tbody-item"}>
+                          {user.active_projects_count}
+                        </td>
+                        <td data-th="Номер телефона" className={"tbody-item"}>
+                          {user.finished_projects_count}
+                        </td>
+                      </tr>
+                    ))
+                  ) : (
+                    <tr className="no-filter-Data">
+                      <td colSpan="9">Нет данных по этим параметрам</td>
                     </tr>
-                  ))}
+                  )}
                 </tbody>
               </Table>
             </div>

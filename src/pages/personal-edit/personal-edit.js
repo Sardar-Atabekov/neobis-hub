@@ -5,7 +5,8 @@ import downloadIcon from "./../../assets/img/Group 115.png";
 import Alert, { confirmAlert } from "../../functions/alert";
 import { getData, patchFilesData } from "../../functions/requests";
 import AddDocumentIcon from "./../../assets/icons/addDocument.svg";
-import axios from "axios";
+import { Link } from "react-router-dom";
+import "./personal-edit.css";
 
 const EditPersonalAreaPage = (props) => {
   const [photo, setPhoto] = useState(false);
@@ -47,7 +48,7 @@ const EditPersonalAreaPage = (props) => {
     formData.append("surname", data.surname);
     formData.append("telegram", data.telegram);
 
-    patchFilesData(`user/self_update/${userData.id}/`, formData)
+    patchFilesData(`user/self_update/`, formData)
       .then((response) => {
         if (response.name) {
           Alert("Данные обновлены");
@@ -69,7 +70,7 @@ const EditPersonalAreaPage = (props) => {
       <Title>Редактировать личные данные</Title>
       {loading ? (
         <form className="flex-block" onSubmit={postUserData}>
-          <div className="input-blocks">
+          <div className="input-blocks mr-5">
             <div className="form-group">
               <label htmlFor="name">Имя</label>
               <input
@@ -94,6 +95,7 @@ const EditPersonalAreaPage = (props) => {
               <label htmlFor="email">Email</label>
               <input
                 type="text"
+                // disabled
                 name="email"
                 className="form-control"
                 id="email"
@@ -111,10 +113,16 @@ const EditPersonalAreaPage = (props) => {
               />
             </div>
             <div className="button-block">
+              <Link
+                className="delete-btn-block btn p-3"
+                to={`/change-password/${userData.id}`}
+              >
+                Изменить пароль
+              </Link>
               <input type="submit" className="btn add-btn" value="Сохранить" />
             </div>
           </div>
-          <div className="ml-5">
+          <div className="downloadBlock">
             <div className="text-center">
               <label htmlFor="photoImg" className="text-center mb-0">
                 <img

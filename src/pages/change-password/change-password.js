@@ -14,7 +14,7 @@ const EditPersonalAreaPage = (props) => {
     });
 
     data.user_id = props.match.params.id;
-    postData(`user/change_password/${props.match.params.id}/`, data)
+    postData(`user/change_password/`, data)
       .then((response) => {
         if (response.id) {
           Alert("Данные обновлены");
@@ -23,7 +23,7 @@ const EditPersonalAreaPage = (props) => {
             1000
           );
         } else {
-          Alert(response.error, "error");
+          Alert(response.Message, "error");
         }
       })
       .catch(() =>
@@ -40,6 +40,7 @@ const EditPersonalAreaPage = (props) => {
             <label htmlFor="past_password">Старый пароль</label>
             <input
               type="text"
+              required
               name="past_password"
               className="form-control"
               id="past_password"
@@ -49,6 +50,7 @@ const EditPersonalAreaPage = (props) => {
             <label htmlFor="password">Пароль</label>
             <input
               type="text"
+              required
               name="password"
               className="form-control"
               id="password"
@@ -58,6 +60,7 @@ const EditPersonalAreaPage = (props) => {
             <label htmlFor="repeat_password">Повторите пароль</label>
             <input
               type="text"
+              required
               name="repeat_password"
               className="form-control"
               id="repeat_password"

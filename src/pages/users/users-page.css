@@ -14,6 +14,17 @@
     justify-content: space-between;
 }
 
+.filters-iconBlock {
+    display: flex;
+    align-items: center;
+    height: 100% !important; 
+    justify-content: space-between;
+}
+
+.filters-iconBlock img {
+    cursor: pointer;
+}
+
 .filter-select {
     height: 100%;
     width: 100%;
@@ -44,4 +55,8 @@
 
 .filter-img {
     margin-left: 10px;
+}
+
+.no-filter-Data {
+    text-align: center;
 }

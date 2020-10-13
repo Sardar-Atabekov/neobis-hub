@@ -1,0 +1,53 @@
+.overlay {
+    position: fixed;
+    top: 0px !important;
+    left: 0;
+    position: fixed;
+    width: 100% !important;
+    height: 100vh !important;
+    background: rgba(87, 87, 87, 0.8);
+    z-index: 1100;
+    left: 0%;
+    top: 0;
+    bottom: 0;
+    padding: 40px 30px;
+    right: 0;
+    width: 100%;
+    height: 100vh;
+    z-index: 999;
+}
+
+.dialog {
+    top: 50%;
+    left: 50%;
+    z-index: 1;
+    display: flex;
+    max-height: 650px;
+    max-width: 80%;
+    border-radius: 4px;
+    padding: 50px 80px;
+    position: absolute;
+    text-align: center;
+    flex-direction: column;
+    background-color: #f5f6f8;
+    transform: translate(-50%, -50%);
+    box-shadow: 0 0 40px 0 rgba(0, 0, 0, 0.16);
+}
+
+.imgBlock-closeModal {
+    top: 20px;
+    right: 20px;
+    width: 25px;
+    height: 25px;
+    cursor: pointer;
+    position: absolute;
+}
+
+.img-block .cursor-pointer {
+    cursor: pointer;
+}
+.img-block .dialog img {
+    height: 100%;
+    max-width: 100%;
+    max-height: 550px;
+}
