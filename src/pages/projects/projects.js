@@ -67,7 +67,7 @@ const ProjectsPage = (props) => {
         Проекты
       </Title>
       <div className="add-btn-block">
-        <div className="form-group mr-2">
+        <div className="form-group mr-2 mb-0">
           <select
             className="select form-control"
             defaultValue={status}
@@ -79,7 +79,7 @@ const ProjectsPage = (props) => {
             <option value="c">Завершенный</option>
           </select>
         </div>
-        <div className="form-group mr-2">
+        <div className="form-group mr-2 mb-0">
           <select
             className="select form-control"
             defaultValue={type}
@@ -93,7 +93,7 @@ const ProjectsPage = (props) => {
             ))}
           </select>
         </div>
-        <div className="form-group mr-2">
+        <div className="form-group mr-2 mb-0">
           <select
             className="select form-control"
             defaultValue={status}
