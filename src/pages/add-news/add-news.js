@@ -44,7 +44,7 @@ const AddNewsPage = (props) => {
           console.log("response", response);
           if (response.id) {
             Alert("Новость добавлена");
-            setTimeout(() => props.history.push(`/news/`), 1000);
+            setTimeout(() => props.history.push(`/news/1/`), 1000);
           } else {
             Alert(response, "error");
           }

@@ -40,7 +40,7 @@ const UserPage = (props) => {
   const userRole = (roleId) => {
     return roles.filter((role) => role.id === roleId)[0]
       ? roles.filter((role) => role.id === roleId)[0].name
-      : "Удаленный роль";
+      : "Роль удален";
   };
 
   console.log("setUserData", userData);

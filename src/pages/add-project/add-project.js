@@ -52,7 +52,7 @@ const AddProjectPage = (props) => {
         console.log("response", response);
         if (response.id) {
           Alert("Проект добавлена");
-          setTimeout(() => props.history.push(`/projects/`), 1000);
+          setTimeout(() => props.history.push(`/projects/1/`), 1000);
         } else {
           Alert(response.detail, "error");
         }

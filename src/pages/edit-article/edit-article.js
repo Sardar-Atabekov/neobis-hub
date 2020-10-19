@@ -58,7 +58,7 @@ const EditArticlePage = (props) => {
       .then((response) => {
         if (response.id) {
           Alert("Новость обновлен");
-          setTimeout(() => props.history.push(`/news/`), 1000);
+          setTimeout(() => props.history.push(`/news/1/`), 1000);
         } else {
           Alert(response, "error");
         }

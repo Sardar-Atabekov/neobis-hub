@@ -94,7 +94,7 @@ const AddProjectPage = (props) => {
       .then((response) => {
         if (response.id) {
           Alert("Данные проекта изменен");
-          setTimeout(() => props.history.push(`/projects/`), 1000);
+          setTimeout(() => props.history.push(`/projects/1/`), 1000);
         } else {
           Alert(response.error ? response.error : response.detail, "error");
         }
