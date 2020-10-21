@@ -3,10 +3,10 @@ import { getData } from "../../functions/requests";
 import Title from "./../../components/title/title";
 import arrow from "./../../assets/icons/arrow.svg";
 import { TimeFormat } from "./../../functions/time";
+import { Pagination } from "@material-ui/lab";
 import Loading from "../../components/loading/loading";
 import AddBtn from "./../../components/buttons/add-btn";
 import { Link } from "react-router-dom";
-
 import "./news-page.css";
 const NewsPage = (props) => {
   const [total, setTotal] = useState("");
@@ -14,12 +14,12 @@ const NewsPage = (props) => {
   const [loading, setLoading] = useState(false);
   const [searchText, setSearchText] = useState("");
   const [firstArticle, setFirstArticle] = useState("");
-  const [page, setPage] = useState(props.match.params.page);
+  const [page, setPage] = useState(+props.match.params.page);
   const userRights = JSON.parse(localStorage.getItem("neobisHUBDate"));
 
   let countArticle = 5;
   useEffect(() => {
-    setPage(props.match.params.page);
+    // setPage(props.match.params.page);
     getData(
       `news/?page=${page}${searchText && `&&search=${searchText}`}&&page_size=5`
     ).then((res) => {
@@ -132,7 +132,17 @@ const NewsPage = (props) => {
               : "Нет данных по этим параметрам"}
           </div>
           {total > countArticle ? (
-            <div className="pagination-block">{createPage()}</div>
+            <div className="pagination-block">
+              {/* {createPage()} */}
+              <Pagination
+                count={Math.ceil(total / countArticle)}
+                page={page}
+                onChange={(e, number) => {
+                  setPage(number);
+                  setLoading(false);
+                }}
+              />
+            </div>
           ) : null}
         </>
       ) : (

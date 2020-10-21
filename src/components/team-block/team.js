@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { getData } from "../../functions/requests";
+import CreatableSelect from "react-select/creatable";
 import deleteIcon from "./../../assets/icons/deleteIcon.svg";
-
 import "./team.css";
 
 const AddNewsPage = ({ team, setTeam, pmID }) => {
@@ -21,6 +21,13 @@ const AddNewsPage = ({ team, setTeam, pmID }) => {
     });
   }, [loading, pmID]);
 
+  let usersNames = users.map((item) => {
+    let user = {
+      label: `${item.name ? `${item.name} ${item.surname}` : item.email}`,
+      value: item.id,
+    };
+    return user;
+  });
   const AddUserTeam = () => {
     let user = {
       user: null,
@@ -29,6 +36,8 @@ const AddNewsPage = ({ team, setTeam, pmID }) => {
 
     setTeam([...team, user]);
   };
+
+  console.log("usersNames", usersNames);
 
   const changeUser = (id, value) => {
     team[id].user = value;
@@ -50,7 +59,7 @@ const AddNewsPage = ({ team, setTeam, pmID }) => {
       {loading ? (
         <div className="form-group">
           <label htmlFor="pm">ПМ проекта</label>
-          <select
+          {/* <select
             className="select form-control"
             name="pm"
             id="pm"
@@ -63,10 +72,19 @@ const AddNewsPage = ({ team, setTeam, pmID }) => {
             {loading &&
               users.map((item) => (
                 <option key={item.id} value={item.id}>
-                  {`${item.surname} ${item.name}`}
+                  {item.surname} {item.name ? item.name : item.email}
                 </option>
               ))}
-          </select>
+          </select> */}
+          <CreatableSelect
+            isClearable
+            name="pm"
+            placeholder="Выберите пользователя"
+            defaultValue={
+              pmID ? usersNames.filter((item) => item.value == pmID)[0] : ""
+            }
+            options={usersNames}
+          />
         </div>
       ) : null}
 
@@ -77,7 +95,7 @@ const AddNewsPage = ({ team, setTeam, pmID }) => {
         team.map((item, i) => (
           <div key={i} className="user-project">
             <div className="form-group w-100">
-              <select
+              {/* <select
                 className="select form-control"
                 onChange={(e) => changeUser(i, e.target.value)}
                 defaultValue={item.user ? item.user : ""}
@@ -88,11 +106,19 @@ const AddNewsPage = ({ team, setTeam, pmID }) => {
                 </option>
                 {users.map((item) => (
                   <option key={item.id} value={item.id}>
-                    {item.surname}
-                    {item.name ? item.name : item.email}
+                    {item.surname} {item.name ? item.name : item.email}
                   </option>
                 ))}
-              </select>
+              </select> */}
+              <CreatableSelect
+                isClearable
+                placeholder="Выберите пользователя"
+                onChange={(e) => changeUser(i, e.value)}
+                defaultValue={
+                  item.user ? usersNames.filter((userName) => userName.value == item.user)[0] : ""
+                }
+                options={usersNames}
+              />
               <select
                 className="select  form-control mt-3"
                 defaultValue={item.user_role ? item.user_role : ""}
