@@ -80,7 +80,7 @@ const UsersPage = () => {
         Пользователи
       </Title>
       <div className="add-btn-block">
-        <div className="form-group mr-2">
+        <div className="form-group mr-2 mb-0">
           <select
             defaultValue={department}
             className="select form-control"
@@ -94,7 +94,7 @@ const UsersPage = () => {
             ))}
           </select>
         </div>
-        <div className="form-group mr-2">
+        <div className="form-group mr-2 mb-0">
           <select
             defaultValue={role}
             className="select form-control"
@@ -106,7 +106,7 @@ const UsersPage = () => {
             <option value="t">Тимлид</option>
           </select>
         </div>
-        <div className="form-group mr-2">
+        <div className="form-group mr-2 mb-0">
           <select
             defaultValue={status}
             className="select form-control"

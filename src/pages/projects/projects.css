@@ -4,7 +4,6 @@
      border-radius: 10px;
      width: 380px;
      padding: 14px;
-     height: 100%;
      color: black;
      display: flex;
      flex-direction: column;
@@ -56,16 +55,14 @@
      right: 0;
      border-radius: 30px;
      margin-left: 8px;
-     width: 120px;
-     padding: 3px;
+     min-width: 120px;
+     padding: 5px 7px 3px;
      height: 30px;
      text-align: center;
      font-family: 'Montserrat-medium';
      font-weight: 600;
      font-size: 14px;
-     padding-top: 5px;
      line-height: 130%;
-
  }
 
  .project .a,
@@ -134,4 +131,14 @@
 
  .pg-btn {
      margin: 10px;
+ }
+
+ .add-btn {
+     margin: 0;
+ }
+
+ .add-btn-block {
+     margin-bottom: 35px;
+     display: flex;
+     align-items: center;
  }
