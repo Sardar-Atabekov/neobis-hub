@@ -110,7 +110,7 @@ const AddProjectPage = (props) => {
     screenshotData.append("image", screenshot);
     screenshotData.append("project", project.id);
 
-    postFilesData(`project/screenshot/`, screenshotData)
+    postFilesData(`project/screenshot`, screenshotData)
       .then((response) => {
         setScreenshots([...screenshots, response]);
       })

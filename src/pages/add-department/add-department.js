@@ -22,7 +22,7 @@ const AddDepartmentPage = (props) => {
 
     if (logo) {
       if (backgroundImage) {
-        postFilesData("department/create/", formData)
+        postFilesData("department/create", formData)
           .then((response) => {
             if (response.id) {
               Alert("Департамент добавлен");
