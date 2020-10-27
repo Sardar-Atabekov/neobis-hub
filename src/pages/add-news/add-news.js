@@ -39,7 +39,7 @@ const AddNewsPage = (props) => {
     formData.append("picture", backgroundImage);
     formData.append("link", "https://neobis.kg/");
     if (backgroundImage) {
-      postFilesData("news/create/", formData)
+      postFilesData("news/create", formData)
         .then((response) => {
           console.log("response", response);
           if (response.id) {
