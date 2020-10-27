@@ -13,7 +13,7 @@ const ArticlePage = (props) => {
   const userRights = JSON.parse(localStorage.getItem("neobisHUBDate"));
 
   useEffect(() => {
-    getData(`news/update_delete/${props.match.params.id}/`).then((res) => {
+    getData(`news/update_delete/${props.match.params.id}`).then((res) => {
       setArticle(res);
       setLoading(true);
     });

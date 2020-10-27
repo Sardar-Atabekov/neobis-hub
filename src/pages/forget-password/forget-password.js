@@ -15,7 +15,7 @@ const ForgetPasswordPage = (props) => {
       data[key] = value;
     });
     console.log(data);
-    postDataNoToken("user/send_code/", data)
+    postDataNoToken("user/send_code", data)
       .then((response) => {
         console.log(response);
         if (response.user_id) {

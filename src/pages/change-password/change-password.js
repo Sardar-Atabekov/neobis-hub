@@ -14,7 +14,7 @@ const EditPersonalAreaPage = (props) => {
     });
 
     data.user_id = props.match.params.id;
-    postData(`user/change_password/`, data)
+    postData(`user/change_password`, data)
       .then((response) => {
         if (response.id) {
           Alert("Данные обновлены");

@@ -14,7 +14,7 @@ const EditUserPage = (props) => {
   const userRights = JSON.parse(localStorage.getItem("neobisHUBDate"));
 
   useEffect(() => {
-    getData("department/")
+    getData("department")
       .then((res) => {
         console.log(res);
         setDepartments(res);
@@ -71,7 +71,7 @@ const EditUserPage = (props) => {
   const [testName, setTestName] = useState("");
 
   const AddTest = () => {
-    postData(`user/study_progress/create/`, {
+    postData(`user/study_progress/create`, {
       user: userData.id,
       test_name: testName,
       points: points,

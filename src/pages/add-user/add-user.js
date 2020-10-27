@@ -10,7 +10,7 @@ const AddUserPage = (props) => {
   const [loading, setLoading] = useState(false);
   const [departments, setDepartments] = useState([]);
   useEffect(() => {
-    getData("department/")
+    getData("department")
       .then((res) => {
         setDepartments(res);
         setLoading(true);
@@ -30,7 +30,7 @@ const AddUserPage = (props) => {
     });
 
     // data.role = 5;
-    postData("user/create/", data)
+    postData("user/create", data)
       .then((response) => {
         console.log("response", response);
         if (response.Message === "Пользователь успешно создан") {
