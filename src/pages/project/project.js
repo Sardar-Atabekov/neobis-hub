@@ -41,7 +41,7 @@ const ProjectPage = (props) => {
           3000
         ).then((res) => props.history.push(`/projects/1/`));
       });
-    getData("project/role/").then((res) => {
+    getData("project/role").then((res) => {
       setRoles(res);
       setRolesLoading(true);
     });

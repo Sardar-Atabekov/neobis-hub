@@ -8,7 +8,7 @@ import { Link } from "react-router-dom";
 import { Table } from "reactstrap";
 import "./department.css";
 
-const DepartmentPage = (props) => {
+function DepartmentPage(props) {
   const [role, setRole] = useState("all");
   const [users, setUsersData] = useState([]);
   const [loading, setLoading] = useState(false);
@@ -16,11 +16,14 @@ const DepartmentPage = (props) => {
   const [filterData, setFilterData] = useState([]);
   const [sortActiveProjects, setSortActiveProjects] = useState(false);
   const [sortFinishedProjects, setSortFinishedProjects] = useState(false);
+  // console.log('role', role);
+  // console.log('users', users);
+  // console.log('department', department);
 
   const userRights = JSON.parse(localStorage.getItem("neobisHUBDate"));
 
-  useEffect(() => {
-    getData(`department/${props.match.params.id}`).then((res) => {
+  useEffect(function () {
+    getData("department/".concat(props.match.params.id)).then(function (res) {
       setDepartment(res);
       setLoading(true);
       setFilterData(res.users);
@@ -28,21 +31,24 @@ const DepartmentPage = (props) => {
     });
   }, [props.match.params.id]);
 
-  useEffect(() => {
-    let filteredData = [];
+  useEffect(function () {
+    var filteredData = [];
     if (role === "all") {
       filteredData = filterData;
     } else {
-      filteredData = filterData.filter((user) => user.status === role);
+      filteredData = filterData.filter(function (user) {
+        return user.status === role;
+      });
     }
 
-    setUsersData([...filteredData]);
+    // setUsersData([...filteredData]);
+    setUsersData([].concat(filteredData));
   }, [role, filterData]);
 
-  useEffect(() => {
-    let filteredUsers = users.sort(
-      (a, b) => a.active_projects_count - b.active_projects_count
-    );
+  useEffect(function () {
+    var filteredUsers = users.sort(function (a, b) {
+      return a.active_projects_count - b.active_projects_count;
+    });
     filteredUsers = sortActiveProjects
       ? filteredUsers
       : filteredUsers.reverse();
@@ -50,10 +56,10 @@ const DepartmentPage = (props) => {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [sortActiveProjects]);
 
-  useEffect(() => {
-    let filteredUsers = users.sort(
-      (a, b) => a.finished_projects_count - b.finished_projects_count
-    );
+  useEffect(function () {
+    var filteredUsers = users.sort(function (a, b) {
+      return a.finished_projects_count - b.finished_projects_count;
+    });
     filteredUsers = sortFinishedProjects
       ? filteredUsers
       : filteredUsers.reverse();
@@ -111,7 +117,9 @@ const DepartmentPage = (props) => {
                     <select
                       defaultValue=""
                       className="filter-select"
-                      onChange={(e) => setRole(e.target.value)}
+                      onChange={function (e) {
+                        setRole(e.target.value)
+                      }}
                     >
                       <option value="all">Роль</option>
                       <option value="h">Мембер</option>
@@ -125,9 +133,9 @@ const DepartmentPage = (props) => {
                         <img
                           src={sortsIcon}
                           alt="filtersIcon"
-                          onClick={() =>
+                          onClick={function () {
                             setSortActiveProjects(!sortActiveProjects)
-                          }
+                          }}
                         />
                       </div>
                     </th>
@@ -137,9 +145,9 @@ const DepartmentPage = (props) => {
                         <img
                           src={sortsIcon}
                           alt="filtersIcon"
-                          onClick={() =>
+                          onClick={function () {
                             setSortFinishedProjects(!sortFinishedProjects)
-                          }
+                          }}
                         />
                       </div>
                     </th>
@@ -147,41 +155,43 @@ const DepartmentPage = (props) => {
                 </thead>
                 <tbody className={"tbody"}>
                   {users.length > 0 ? (
-                    users.map((user) => (
-                      <tr key={user.id}>
-                        <td data-th="Ф.И.О" className={"tbody-item"}>
-                          <Link to={`/user/${user.id}/`}>
-                            {user.name ? user.name : user.email} {user.surname}
-                          </Link>
-                        </td>
+                    users.map(function (user) {
+                      return (
+                        <tr key={user.id}>
+                          <td data-th="Ф.И.О" className={"tbody-item"}>
+                            <Link to={`/user/${user.id}/`}>
+                              {user.name ? user.name : user.email} {user.surname}
+                            </Link>
+                          </td>
 
-                        <td data-th="role" className={"tbody-item"}>
-                          {userStatus[user.status]}
-                        </td>
-                        <td data-th="Номер телефона" className={"tbody-item"}>
-                          {user.phone}
-                        </td>
-                        <td data-th="Номер телефона" className={"tbody-item"}>
-                          {user.active_projects_count}
-                        </td>
-                        <td data-th="Номер телефона" className={"tbody-item"}>
-                          {user.finished_projects_count}
-                        </td>
-                      </tr>
-                    ))
+                          <td data-th="role" className={"tbody-item"}>
+                            {userStatus[user.status]}
+                          </td>
+                          <td data-th="Номер телефона" className={"tbody-item"}>
+                            {user.phone}
+                          </td>
+                          <td data-th="Номер телефона" className={"tbody-item"}>
+                            {user.active_projects_count}
+                          </td>
+                          <td data-th="Номер телефона" className={"tbody-item"}>
+                            {user.finished_projects_count}
+                          </td>
+                        </tr>
+                      )
+                    })
                   ) : (
-                    <tr className="no-filter-Data">
-                      <td colSpan="9">Нет данных по этим параметрам</td>
-                    </tr>
-                  )}
+                      <tr className="no-filter-Data">
+                        <td colSpan="9">Нет данных по этим параметрам</td>
+                      </tr>
+                    )}
                 </tbody>
               </Table>
             </div>
           </div>
         </>
       ) : (
-        <Loading />
-      )}
+          <Loading />
+        )}
     </div>
   );
 };

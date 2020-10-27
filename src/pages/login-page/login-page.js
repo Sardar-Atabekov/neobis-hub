@@ -16,7 +16,7 @@ const LoginPage = (props) => {
       data[key] = value;
     });
     console.log(data);
-    postDataNoToken("user/login/", data)
+    postDataNoToken("user/login", data)
       .then((response) => {
         console.log(response);
         if (response.token) {

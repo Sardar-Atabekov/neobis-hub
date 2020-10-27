@@ -32,7 +32,7 @@ const PersonalAreaPage = (props) => {
       setLoading(true);
       setTests(res.progress);
     });
-    getData("project/role/").then((res) => {
+    getData("project/role").then((res) => {
       setRoles(res);
       setRolesLoading(true);
     });

@@ -52,7 +52,7 @@ const AddProjectPage = (props) => {
       setFinishDate(new Date(res.date_of_finish));
       setDownloadImg(res.logo ? res.logo : downloadIcon);
     });
-    getData(`project/season/`).then((res) => {
+    getData(`project/season`).then((res) => {
       setSeason(res);
     });
   }, [props.match.params.id]);
