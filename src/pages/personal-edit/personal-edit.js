@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import Title from "./../../components/title/title";
 import Loading from "../../components/loading/loading";
-import downloadIcon from "./../../assets/img/Group 115.png";
+import downloadIcon from "../../assets/img/Group 115.png";
 import Alert, { confirmAlert } from "../../functions/alert";
 import { getData, patchFilesData } from "../../functions/requests";
 import AddDocumentIcon from "./../../assets/icons/addDocument.svg";
@@ -13,7 +13,7 @@ const EditPersonalAreaPage = (props) => {
   const [userData, setUserData] = useState([]);
   const [loading, setLoading] = useState(false);
   const [summary, setSummary] = useState(false);
-  const [photoImgDownload, setPhotoImgDownload] = useState(downloadIcon);
+  const [photoImgDownload, setPhotoImgDownload] = useState(null);
 
   useEffect(() => {
     getData(`user/${props.match.params.id}`)
@@ -48,7 +48,7 @@ const EditPersonalAreaPage = (props) => {
     formData.append("surname", data.surname);
     formData.append("telegram", data.telegram);
 
-    patchFilesData(`user/self_update/`, formData)
+    patchFilesData(`user/self_update`, formData)
       .then((response) => {
         if (response.name) {
           Alert("Данные обновлены");
@@ -126,7 +126,7 @@ const EditPersonalAreaPage = (props) => {
             <div className="text-center">
               <label htmlFor="photoImg" className="text-center mb-0">
                 <img
-                  src={photoImgDownload}
+                  src={photoImgDownload ? photoImgDownload : downloadIcon}
                   alt="NewDepartmentIcon"
                   className="download-img"
                 />
@@ -137,7 +137,7 @@ const EditPersonalAreaPage = (props) => {
                 className="d-none"
                 onChange={(e) => {
                   setPhoto(e.target.files[0]);
-                  setPhotoImgDownload(URL.createObjectURL(e.target.files[0]));
+                  setPhotoImgDownload(window.URL.createObjectURL(e.target.files[0]));
                 }}
               />
               <label htmlFor="photoImg" className="download-text">
