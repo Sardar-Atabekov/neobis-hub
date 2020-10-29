@@ -1,3 +1,11 @@
 .downloadBlock {
     margin-left: 200px;
 }
+
+.delete-btn-block {
+    margin: 0;
+}
+
+.button-block {
+    padding: 10px 0 25px;
+}
