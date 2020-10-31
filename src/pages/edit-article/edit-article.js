@@ -17,7 +17,7 @@ const EditArticlePage = (props) => {
   const userData = JSON.parse(localStorage.getItem("neobisHUBDate"));
 
   useEffect(() => {
-    getData(`news/update_delete/${props.match.params.id}`).then((res) => {
+    getData(`news/update_delete/${props.match.params.id}/`).then((res) => {
       setArticle(res);
       setLoading(true);
       let editorText = EditorState.createEmpty(ReactHtmlParser(res.text));

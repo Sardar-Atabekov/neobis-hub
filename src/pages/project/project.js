@@ -26,7 +26,7 @@ const ProjectPage = (props) => {
   const userRights = JSON.parse(localStorage.getItem("neobisHUBDate"));
 
   useEffect(() => {
-    getData(`project/${props.match.params.id}`)
+    getData(`project/${props.match.params.id}/`)
       .then((res) => {
         let data = res;
         data.project_type_name = res.project_type_name.replace(/проект/i, "");
@@ -41,7 +41,7 @@ const ProjectPage = (props) => {
           3000
         ).then((res) => props.history.push(`/projects/1/`));
       });
-    getData("project/role").then((res) => {
+    getData("project/role/").then((res) => {
       setRoles(res);
       setRolesLoading(true);
     });

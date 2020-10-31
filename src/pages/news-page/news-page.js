@@ -23,8 +23,8 @@ const NewsPage = (props) => {
     getData(
       `news/?page=${page}${searchText && `&&search=${searchText}`}&&page_size=5`
     ).then(function (res) {
-      setFirstArticle(res[0]);
-      let data = res;
+      setFirstArticle(res.results[0]);
+      let data = res.results;
       delete data[0];
       setTotal(res.count);
       setNewsData(data);

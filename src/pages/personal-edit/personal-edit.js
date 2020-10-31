@@ -16,7 +16,7 @@ const EditPersonalAreaPage = (props) => {
   const [photoImgDownload, setPhotoImgDownload] = useState(null);
 
   useEffect(() => {
-    getData(`user/${props.match.params.id}`)
+    getData(`user/${props.match.params.id}/`)
       .then((res) => {
         setUserData(res);
         setLoading(true);
@@ -48,7 +48,7 @@ const EditPersonalAreaPage = (props) => {
     formData.append("surname", data.surname);
     formData.append("telegram", data.telegram);
 
-    patchFilesData(`user/self_update`, formData)
+    patchFilesData(`user/self_update/`, formData)
       .then((response) => {
         if (response.name) {
           Alert("Данные обновлены");

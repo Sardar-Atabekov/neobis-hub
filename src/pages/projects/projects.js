@@ -30,11 +30,11 @@ const ProjectsPage = (props) => {
         searchText && `&&search=${searchText}`
       }&page_size=9`
     ).then((res) => {
-      setProjects(res);
+      setProjects(res.results);
       setTotal(res.count);
       setLoading(true);
     });
-    getData(`project/season`).then((res) => {
+    getData(`project/season/`).then((res) => {
       setSeasonData(res);
     });
   }, [type, season, status, searchText, page]);

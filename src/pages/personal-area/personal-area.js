@@ -26,13 +26,13 @@ const PersonalAreaPage = (props) => {
   const [activeProjectTab, setActiveProjectTab] = useState(true);
 
   useEffect(() => {
-    getData(`user/${props.match.params.id}`).then((res) => {
+    getData(`user/${props.match.params.id}/`).then((res) => {
       res.telegram = res.telegram.replace("@", "");
       setUserData(res);
       setLoading(true);
       setTests(res.progress);
     });
-    getData("project/role").then((res) => {
+    getData("project/role/").then((res) => {
       setRoles(res);
       setRolesLoading(true);
     });

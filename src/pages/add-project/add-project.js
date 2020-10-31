@@ -47,7 +47,7 @@ const AddProjectPage = (props) => {
     data.date_of_finish = finishDate;
     console.log("data", data);
 
-    postData("project/create", data)
+    postData("project/create/", data)
       .then((response) => {
         console.log("response", response);
         if (response.id) {

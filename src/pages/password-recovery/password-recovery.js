@@ -16,7 +16,7 @@ const ForgetPasswordPage = (props) => {
     });
     console.log(data);
     data.user_id = props.match.params.id;
-    postDataNoToken("user/password_recovery", data)
+    postDataNoToken("user/password_recovery/", data)
       .then((response) => {
         if (response.Message) {
           props.history.push(`/`);
