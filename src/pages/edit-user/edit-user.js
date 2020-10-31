@@ -14,7 +14,7 @@ const EditUserPage = (props) => {
   const userRights = JSON.parse(localStorage.getItem("neobisHUBDate"));
 
   useEffect(() => {
-    getData("department")
+    getData("department/")
       .then((res) => {
         console.log(res);
         setDepartments(res);
@@ -25,7 +25,7 @@ const EditUserPage = (props) => {
   }, []);
 
   useEffect(() => {
-    getData(`user/${props.match.params.id}`)
+    getData(`user/${props.match.params.id}/`)
       .then((res) => {
         let isActive = `${res.is_active}`;
         let firstSymbol = isActive[0].toUpperCase(),
@@ -71,7 +71,7 @@ const EditUserPage = (props) => {
   const [testName, setTestName] = useState("");
 
   const AddTest = () => {
-    postData(`user/study_progress/create`, {
+    postData(`user/study_progress/create/`, {
       user: userData.id,
       test_name: testName,
       points: points,

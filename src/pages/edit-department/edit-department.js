@@ -17,7 +17,7 @@ const EditDepartmentPage = (props) => {
   const userRights = JSON.parse(localStorage.getItem("neobisHUBDate"));
 
   useEffect(() => {
-    getData(`department/${props.match.params.id}`)
+    getData(`department/${props.match.params.id}/`)
       .then((res) => {
         setName(res.name);
         setDepartmentData(res);

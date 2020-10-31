@@ -23,7 +23,7 @@ function DepartmentPage(props) {
   const userRights = JSON.parse(localStorage.getItem("neobisHUBDate"));
 
   useEffect(function () {
-    getData("department/".concat(props.match.params.id)).then(function (res) {
+    getData(`department/${props.match.params.id}/`).then(function (res) {
       setDepartment(res);
       setLoading(true);
       setFilterData(res.users);

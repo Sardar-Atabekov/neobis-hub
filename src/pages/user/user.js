@@ -26,12 +26,12 @@ const UserPage = (props) => {
   const userRights = JSON.parse(localStorage.getItem("neobisHUBDate"));
 
   useEffect(() => {
-    getData(`user/${props.match.params.id}`).then((res) => {
+    getData(`user/${props.match.params.id}/`).then((res) => {
       setUserData(res);
       setLoading(true);
       setTests(res.progress);
     });
-    getData("project/role").then((res) => {
+    getData("project/role/").then((res) => {
       setRoles(res);
       setRolesLoading(true);
     });

@@ -26,7 +26,7 @@ const UsersPage = () => {
   const userRights = JSON.parse(localStorage.getItem("neobisHUBDate"));
 
   useEffect(() => {
-    getData("department")
+    getData("department/")
       .then((res) => {
         setDepartments(res);
         setLoading(true);

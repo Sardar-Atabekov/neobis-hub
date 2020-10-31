@@ -23,7 +23,7 @@ const DepartmentsPage = () => {
     "#4723A9",
   ];
   useEffect(() => {
-    getData("department").then((res) => {
+    getData("department/").then((res) => {
       console.log(res);
       setDepartments(res);
       setLoading(true);

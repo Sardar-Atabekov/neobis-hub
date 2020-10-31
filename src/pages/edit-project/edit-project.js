@@ -38,7 +38,7 @@ const AddProjectPage = (props) => {
   const userRights = JSON.parse(localStorage.getItem("neobisHUBDate"));
 
   useEffect(() => {
-    getData(`project/${props.match.params.id}`).then((res) => {
+    getData(`project/${props.match.params.id}/`).then((res) => {
       setProject(res);
       setTeam(res.team);
       setLoadingProject(true);
@@ -52,7 +52,7 @@ const AddProjectPage = (props) => {
       setFinishDate(new Date(res.date_of_finish));
       setDownloadImg(res.logo ? res.logo : downloadIcon);
     });
-    getData(`project/season`).then((res) => {
+    getData(`project/season/`).then((res) => {
       setSeason(res);
     });
   }, [props.match.params.id]);
@@ -110,7 +110,7 @@ const AddProjectPage = (props) => {
     screenshotData.append("image", screenshot);
     screenshotData.append("project", project.id);
 
-    postFilesData(`project/screenshot`, screenshotData)
+    postFilesData(`project/screenshot/`, screenshotData)
       .then((response) => {
         setScreenshots([...screenshots, response]);
       })
