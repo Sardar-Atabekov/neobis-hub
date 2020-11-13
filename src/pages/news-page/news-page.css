@@ -32,7 +32,6 @@
 }
 
 .news-block {
-    width: 280px;
     /* padding: 5px; */
     color: black;
     display: flex;
@@ -89,4 +88,22 @@
 .news-read {
     font-size: 14px;
     line-height: 15px;
+}
+
+
+
+@media (max-width: 1270px) {
+    .news-grid-block {
+        display: grid;
+        grid-template-columns: 1fr 1fr 1fr;
+        grid-gap: 1vw;
+    }
+}
+
+@media (max-width: 1100px) {
+    .news-grid-block {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        grid-gap: 1vw;
+    }
 }
