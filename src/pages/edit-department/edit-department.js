@@ -21,7 +21,6 @@ const EditDepartmentPage = (props) => {
       .then((res) => {
         setName(res.name);
         setDepartmentData(res);
-        setBackgroundImage(res.background);
         setDownloadImg(res.logo ? res.logo : downloadIcon);
         setBgImgDownload(res.background ? res.background : downloadIcon);
         setLoading(true);

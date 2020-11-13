@@ -50,7 +50,7 @@ const ProjectPage = (props) => {
   const userRole = (roleId) => {
     return roles.filter((role) => role.id === roleId)[0]
       ? roles.filter((role) => role.id === roleId)[0].name
-      : "Удаленный роль";
+      : "Удаленная роль";
   };
 
   console.log(project);

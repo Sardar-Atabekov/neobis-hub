@@ -197,7 +197,9 @@ const EditUserPage = (props) => {
           <div className="button-block mt-auto w-30 ps-20">
             {userRights.delete_user ? (
               <DeleteBtn
-                title={`Вы уверены что хотите удалить пользователя ${userData.name}?`}
+                title={`Вы уверены что хотите удалить пользователя ${
+                  userData.name ? userData.name : ''
+                }?`}
                 subTitle="Пользователь удален"
                 url={`user/delete/${userData.id}/`}
                 toUrl={"/users/"}

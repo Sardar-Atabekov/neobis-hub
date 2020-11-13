@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 import Title from "../../components/title/title";
 import Team from "./../../components/team-block/team";
-import { format, addDays, addMonths } from "date-fns";
+import { format, addDays } from "date-fns";
 import Loading from "../../components/loading/loading";
 import Alert, { confirmAlert } from "../../functions/alert";
 import downloadIcon from "./../../assets/img/Group 115.png";
@@ -283,7 +283,7 @@ const AddProjectPage = (props) => {
                   title={`Вы уверены что хотите удалить проект ${project.name}?`}
                   subTitle="Проект удален"
                   url={`project/update_delete/${project.id}/`}
-                  toUrl={"/projects/"}
+                  toUrl={"/projects/1/"}
                   props={props}
                 />
               ) : null}

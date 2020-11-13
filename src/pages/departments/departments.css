@@ -3,7 +3,7 @@
     border-radius: 10px;
     background: #115EF8;
     max-height: 215px;
-    width: 380px;
+    width: 100%;
     padding: 15px;
     color: #fff;
     margin-bottom: 3px;
@@ -11,6 +11,12 @@
     /* background-repeat: no-repeat;
     background-size: cover;
     background-position: center; */
+}
+
+.department-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr;
+    grid-gap: 1vw;
 }
 
 .department:hover {
@@ -56,3 +62,4 @@
 .mentor_count {
     margin-right: 10px;
 }
+

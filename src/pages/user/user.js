@@ -12,7 +12,6 @@ import TestBlock from "./../../components/test-block/test-block";
 import { userStatus, projectType } from "../../constants/status";
 import mailSendIcon from "./../../assets/icons/bx-mail-send.svg";
 import StudyPlan from "./../../components/study-plan/study-plan";
-import { API } from "./../../constants/API";
 import { Link } from "react-router-dom";
 
 import "./user.css";
@@ -40,7 +39,7 @@ const UserPage = (props) => {
   const userRole = (roleId) => {
     return roles.filter((role) => role.id === roleId)[0]
       ? roles.filter((role) => role.id === roleId)[0].name
-      : "Роль удален";
+      : "Удаленная роль";
   };
 
   console.log("setUserData", userData);

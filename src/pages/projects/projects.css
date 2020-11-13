@@ -2,7 +2,6 @@
      background: #FFFFFF;
      box-shadow: 0px 2px 6px rgba(0, 0, 0, 0.1);
      border-radius: 10px;
-     width: 380px;
      padding: 14px;
      color: black;
      display: flex;
@@ -72,7 +71,7 @@
      /* color: #e40e00;
      background: rgba(228,14,0,.1); */
      color: #ffcb36;
-    background: #fff6cf;
+     background: #fff6cf;
  }
 
  .f {
@@ -80,7 +79,7 @@
      background: #e3ecfe;
  }
 
-.c {
+ .c {
      color: #0DC21F;
      background: rgba(13, 194, 31, 0.1);
  }
@@ -141,4 +140,10 @@
      margin-bottom: 35px;
      display: flex;
      align-items: center;
+ }
+
+ @media (max-width: 1200px) {
+     .project-name {
+         width: 80%;
+     }
  }

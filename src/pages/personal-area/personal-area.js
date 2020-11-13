@@ -41,7 +41,7 @@ const PersonalAreaPage = (props) => {
   const userRole = (roleId) => {
     return roles.filter((role) => role.id === roleId)[0]
       ? roles.filter((role) => role.id === roleId)[0].name
-      : "Роль удален";
+      : "Удаленная роль";
   };
 
   console.log("userData", userData, roles);

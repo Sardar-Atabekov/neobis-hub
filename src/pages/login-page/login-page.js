@@ -35,7 +35,7 @@ const LoginPage = (props) => {
   return (
     <div className="loginWrapper">
       <div className="d-flex">
-        <div className="login w-50 text-left">
+        <div className="login text-left">
           <img src={neobisLogo} alt="neobis logo" />
           <h1 className="welcome">Welcome!</h1>
           <h3 className="sing-in">Войдите в аккаунт</h3>

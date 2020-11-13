@@ -37,7 +37,7 @@ const ProjectsPage = (props) => {
     getData(`project/season/`).then((res) => {
       setSeasonData(res);
     });
-  }, [type, season, status, searchText, page]);
+  }, [type, season, status, searchText, page, props.match.params.page]);
 
   const createPage = () => {
     let buttons = [],

@@ -15,10 +15,11 @@
 
 
 .wrapper {
-    padding: 20px 50px;
+    padding: 20px 40px;
     flex-flow: column;
     padding-bottom: 50px;
 }
+
 
 .grid {
     display: grid;
@@ -72,4 +73,16 @@
     text-transform: capitalize;
     font-family: "Montserrat-Bold";
 
+}
+
+@media (max-width: 1270px) {
+    .wrapper {
+        padding: 20px 30px;
+    }
+
+    .grid {
+        grid-row-gap: 1em;
+        grid-column-gap: 20px;
+        grid-template-columns: 1fr 1fr;
+    }
 }
