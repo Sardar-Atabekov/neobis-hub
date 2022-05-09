@@ -25,7 +25,7 @@ import ForgetPasswordPage from "./pages/forget-password/forget-password";
 import EditDepartmentPage from "./pages/edit-department/edit-department";
 import PasswordRecoveryPage from "./pages/password-recovery/password-recovery";
 
-function App() {
+const App = () => {
   return (
     <BrowserRouter>
       <React.Fragment>
@@ -87,7 +87,7 @@ function App() {
               exact
               component={EditDepartmentPage}
             />
-             <Route
+            <Route
               path="/password-recovery/:id/"
               exact
               component={PasswordRecoveryPage}
@@ -101,3 +101,5 @@ function App() {
 }
 
 export default App;
+
+
