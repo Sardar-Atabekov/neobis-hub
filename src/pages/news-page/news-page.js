@@ -22,8 +22,7 @@ const NewsPage = (props) => {
     function () {
       // setPage(props.match.params.page);
       getData(
-        `news/?page=${page}${
-          searchText && `&&search=${searchText}`
+        `news/?page=${page}${searchText && `&&search=${searchText}`
         }&&page_size=5`
       ).then(function (res) {
         setFirstArticle(res.results[0]);
@@ -114,26 +113,26 @@ const NewsPage = (props) => {
           <div className="news-grid-block">
             {newsData.length > 0
               ? newsData.map((news) => (
-                  <Link
-                    className="news-block"
-                    to={`/article/${news.id}/`}
-                    key={news.id}
-                  >
-                    <img
-                      src={news.picture}
-                      alt={news.name}
-                      className="news-background"
-                    />
-                    <div className="news-title">{news.name}</div>
-                    <div className="news-flex">
-                      <span className="news-time">
-                        {TimeFormat(news.date_of_create)}
-                      </span>
-                      <span className="news-read">прочитать</span>
-                      <img src={arrow} alt="Arrow Img" />
-                    </div>
-                  </Link>
-                ))
+                <Link
+                  className="news-block"
+                  to={`/article/${news.id}/`}
+                  key={news.id}
+                >
+                  <img
+                    src={news.picture}
+                    alt={news.name}
+                    className="news-background"
+                  />
+                  <div className="news-title">{news.name}</div>
+                  <div className="news-flex">
+                    <span className="news-time">
+                      {TimeFormat(news.date_of_create)}
+                    </span>
+                    <span className="news-read">прочитать</span>
+                    <img src={arrow} alt="Arrow Img" />
+                  </div>
+                </Link>
+              ))
               : "Нет данных по этим параметрам"}
           </div>
           {total > countArticle ? (
