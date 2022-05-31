@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { Link } from "react-router-dom";
+import { Link, Redirect, useNavigate } from "react-router-dom";
 import LoginImg from "./../../assets/img/OBJECT.png";
 import neobisLogo from "./../../assets/logo/neobisHub.svg";
 import { postDataNoToken } from "../../functions/requests";
@@ -8,6 +8,7 @@ import "./login-page.css";
 
 const LoginPage = (props) => {
   const [error, setError] = useState(false);
+  const { from } = props.location.state || { from: { pathname: '/news/1' } };
   const postUserData = (e) => {
     e.preventDefault();
     let formData = new FormData(e.target),
@@ -21,6 +22,8 @@ const LoginPage = (props) => {
         console.log(response);
         if (response.token) {
           localStorage.setItem("neobisHUBDate", JSON.stringify(response));
+          // setTimeout(() => props.history.push(`/news/1/`), 500);
+
           setTimeout(() => (window.location.href = `/news/1/`), 500);
         } else {
           setError(true);
@@ -29,8 +32,16 @@ const LoginPage = (props) => {
       .catch(() => setError(true));
   };
 
+  // if (localStorage.getItem("neobisHUBDate")) {
+  //   props.history.push(`/news/1/`);
+  // }
+
+
+  console.log('from', from)
   if (localStorage.getItem("neobisHUBDate")) {
-    props.history.push(`/news/1/`);
+    return (
+      <Redirect to={from} />
+    )
   }
   return (
     <div className="loginWrapper">

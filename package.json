@@ -1,7 +1,7 @@
 {
   "name": "neobis-hub",
   "version": "0.1.0",
-  "homepage": "https://sardar-atabekov.github.io/NeoBis_HUB/",
+  "homepage": "https://sardar-atabekov.github.io/",
   "private": true,
   "dependencies": {
     "@material-ui/core": "^4.11.0",
