@@ -14,7 +14,7 @@
 importScripts("https://storage.googleapis.com/workbox-cdn/releases/4.3.1/workbox-sw.js");
 
 importScripts(
-  "/NeoBis_HUB/precache-manifest.0fd310d8dc767cae89ccc25e0965257f.js"
+  "/NeoBis_HUB/precache-manifest.cbf22b60827a1f53fcc8f78c47eeea0e.js"
 );
 
 self.addEventListener('message', (event) => {
