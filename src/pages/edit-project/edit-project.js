@@ -10,6 +10,7 @@ import deleteIcon from "./../../assets/icons/deleteIcon.svg";
 import DatePicker, { registerLocale } from "react-datepicker";
 import { projectType } from "../../constants/status";
 import LinksBlock from "./links";
+
 // import deleteIcon from "./../../assets/icons/deleteIcon.svg";
 import {
   getData,

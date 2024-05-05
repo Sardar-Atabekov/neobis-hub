@@ -38,37 +38,6 @@ function confirmAlert(title) {
   });
 }
 
-// async function confirmAlert(title) {
-//   let result = await Swal.fire({
-//     title: title,
-//     icon: "warning",
-//     showCancelButton: true,
-//     confirmButtonColor: "#d33",
-//     cancelButtonColor: "#32b482",
-//     cancelButtonText: "Отмена",
-//     confirmButtonText: "Удалить",
-//   });
-//   console.log(result);
-//   return result.value;
-// }
-// const deleteMessage = (id, name) => {
-//   confirmAlert(`Вы уверены что хотите удалить ${name} департамент?`).then(
-//     (result) => {
-//       if (result) {
-//         deleteData(`department/update_destroy/${id}/`).then((res) => {
-//           if (res.ok) {
-//             Alert("Департамент удалена");
-//             getDepartments();
-//           } else if (res.status === 403) {
-//             Alert("У вас нет прав для выполнения этой операции");
-//           } else {
-//             Alert("Повторите попытку");
-//           }
-//         });
-//       }
-//     }
-//   );
-// };
 const deleteAlert = (title, subTitle, url, toUrl, props) => {
   Swal.fire({
     title: title,

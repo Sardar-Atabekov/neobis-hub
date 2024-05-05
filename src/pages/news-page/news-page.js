@@ -1,158 +1,79 @@
-import React, { useEffect, useState } from "react";
-import { getData } from "../../functions/requests";
-import Title from "./../../components/title/title";
-import arrow from "./../../assets/icons/arrow.svg";
-import { TimeFormat } from "./../../functions/time";
-import { Pagination } from "@material-ui/lab";
-import Loading from "../../components/loading/loading";
-import AddBtn from "./../../components/buttons/add-btn";
-import { Link } from "react-router-dom";
-import "./news-page.css";
-const NewsPage = (props) => {
-  const [total, setTotal] = useState("");
-  const [newsData, setNewsData] = useState([]);
-  const [loading, setLoading] = useState(false);
-  const [searchText, setSearchText] = useState("");
-  const [firstArticle, setFirstArticle] = useState("");
-  const [page, setPage] = useState(+props.match.params.page);
-  const userRights = JSON.parse(localStorage.getItem("neobisHUBDate"));
+import React from 'react'
+import NotificationItem from './NotificationItem'
+import { useSelector } from 'react-redux'
+import { notificationsConfig } from '../../../../app/config'
+import { useState, useMemo, useRef } from 'react'
+// import { Virtuoso } from 'react-virtuoso'
+import InfiniteScroll from 'react-infinite-scroller';
+function NotificationContainer() {
+  const notifications = useSelector((state) => state.notification.notificationList)
+  const sortNotification = (a, b) =>
+    notificationsConfig[a.resourceId][a.notificationType].order > notificationsConfig[b.resourceId][b.notificationType].order ? 1 : -1
 
-  let countArticle = 5;
-  useEffect(
-    function () {
-      // setPage(props.match.params.page);
-      getData(
-        `news/?page=${page}${searchText && `&&search=${searchText}`
-        }&&page_size=5`
-      ).then(function (res) {
-        setFirstArticle(res.results[0]);
-        let data = res.results;
-        delete data[0];
-        setTotal(res.count);
-        setNewsData(data);
-        setLoading(true);
-      });
-    },
-    [page, searchText]
-  );
+  // const sortedNotifications =
+  // notifications.map((item, index) => ({ ...item, index })).sort(sortNotification)
+  const sortedNotifications = useMemo(() => notifications.map((item, index) => ({ ...item, index })).sort(sortNotification), [notifications]);
 
-  console.log("page", page);
-  // const createPage = () => {
-  //   let buttons = [],
-  //     pages = Math.ceil(total / countArticle);
-  //   for (let i = 1; i <= pages; i++) {
-  //     buttons.push(
-  //       <Link
-  //         to={`/news/${i}/`}
-  //         key={i}
-  //         className={i === +page ? "btn pg-btn active-btn " : "btn pg-btn"}
-  //         onClick={() => {
-  //           setPage(i);
-  //           setLoading(false);
-  //         }}
-  //       >
-  //         {i}
-  //       </Link>
-  //     );
-  //   }
-  //   return buttons;
-  // };
-
-  console.log("newsData", newsData, firstArticle);
+  
+  console.log('sortedNotifications', sortedNotifications)
   return (
-    <div className="wrapper">
-      <Title
-        mt={"mt-3"}
-        search={true}
-        setSearchText={setSearchText}
-        component={
-          userRights.add_news ? (
-            <AddBtn url="add-news" text="Добавить" className="m-0" />
-          ) : null
-        }
+    <div style={{ overflow: 'auto' }}>
+      <InfiniteScroll
+        pageStart={0}
+        hasMore={true || false}
+        loader={<div className="loader" key={0}>Loading ...</div>}
       >
-        Новости
-      </Title>
+        {sortedNotifications.map((item, index) => (
+          <NotificationItem key={index} {...item} />
+        ))}
+      </InfiniteScroll>
 
-      {loading ? (
-        <>
-          {firstArticle ? (
-            <Link
-              style={{
-                background: `url(${firstArticle.picture}) no-repeat`,
-                backgroundSize: "cover",
-              }}
-              to={`/article/${firstArticle.id}/`}
-              className="firstArticle"
-            >
-              <div className="firstArticle-hover">
-                <h1 className="firstArticle-title">{firstArticle.name}</h1>
-              </div>
-
-              <div className="news-flex firstArticle-hover">
-                <span className="news-time">
-                  {TimeFormat(firstArticle.date_of_create)}
-                </span>
-                <span className="news-read">прочитать</span>
-                <svg
-                  width="34"
-                  height="34"
-                  viewBox="0 0 34 34"
-                  fill="none"
-                  xmlns="http://www.w3.org/2000/svg"
-                >
-                  <path
-                    opacity="0.8"
-                    d="M27.2215 11.133L33.1774 17.0889M33.1774 17.0889L27.2215 23.0448M33.1774 17.0889H1"
-                    stroke="white"
-                  />
-                </svg>
-              </div>
-            </Link>
-          ) : null}
-          <div className="news-grid-block">
-            {newsData.length > 0
-              ? newsData.map((news) => (
-                <Link
-                  className="news-block"
-                  to={`/article/${news.id}/`}
-                  key={news.id}
-                >
-                  <img
-                    src={news.picture}
-                    alt={news.name}
-                    className="news-background"
-                  />
-                  <div className="news-title">{news.name}</div>
-                  <div className="news-flex">
-                    <span className="news-time">
-                      {TimeFormat(news.date_of_create)}
-                    </span>
-                    <span className="news-read">прочитать</span>
-                    <img src={arrow} alt="Arrow Img" />
-                  </div>
-                </Link>
-              ))
-              : "Нет данных по этим параметрам"}
-          </div>
-          {total > countArticle ? (
-            <div className="pagination-block">
-              {/* {createPage()} */}
-              <Pagination
-                count={Math.ceil(total / countArticle)}
-                page={page}
-                onChange={(e, number) => {
-                  setPage(number);
-                  setLoading(false);
-                }}
-              />
-            </div>
-          ) : null}
-        </>
-      ) : (
-        <Loading />
-      )}
     </div>
-  );
-};
-export default NewsPage;
+  )
+}
+
+export default NotificationContainer
+
+
+Поэтому я говорю
+"In addition, I want to note that you described that magic, according to the worst forecasts, will last for a million years. And here the question arises if everyone uses magic excessively based on this, “they say there is a lot of magic, it will definitely be enough for a million.”
+Will it then be enough for everyone for a million years? It seems to me that then it will be no different from us, who overused natural resources, based on the assumption that it was available elsewhere."
+Я предлегаю использовать и магии и технологии и другии типы энергии. 
+Пример: То есть использовать магии, наряду с энергией полученной от сольце. Или использовать магии с технолгией. Как с примере Лианы. Котоый испольвуют магию Аинза + промышленную революцию. Если она еще так будет продолжать, думаю оно еще много чего может изобрести
+
+
+)) Мм, много где есть. Например:
+Апофеоз демона – история эволюции монстра
+Тут человечеству понадобилось несколько сотен лет, чтобы использовать ману который по идеи там бесконечно(основан на душ, как тут до изменения правила мира) Если бы это прочитали думаю немного, поняли бы что я имею в виду(где-то с середине начинается про ману). Там даже есть примеры использованы чрезмерного использованы маны как тут. Использовать его чтобы получить лучший урожай, и много ресурсов и т.д.
+
+ I'm A Spider, So What?  
+Тут даже меньше века понадобилась что грабить планету(как бы ману, точнее энергию планеты)
+
+Насчет горы, как бы проблема не горе, а самом Людмиле, точнее ее использовании ресурсов. Как сказал сам Аинз, она не знает что такое слово, понятие  "умеренность". Как бы зачем крушить хорошую дом который уже есть(тут про опыт не учтем, только ресурсы). Если так хочется крушить можно использовать дерево или другие ресурсы. Если скажете что с дерево получиться плохой домик, я возворожу. Как по мне дерево лучше в основе дома чем камень, ее даже потом можно использовать)) 
+
+((Тут лично мое замечание она(не только она, в этой истории многие) не знает что такое слово, понятие "оптимизации".
+Например: Использование тонны камня для сверх защиты(я не против про использовании камня, а его чрезмерном использовании камня).. Который только с точки зрение безопасности особо не помогает. Остается много способов диверсии. 
+Ой камонь есть много способов защиты: магические формации, куполы, заклиниение(через предметы), защитные механизмы и т.д. Уверен у Назарика есть много способов защиты. Я на 99% уверен, если они поделиться хотя бы частью этих знаний, то тут уже можно экономить  очень много камня и сделать безопасноть лучше. ))
+
+"That's why I compared your original argument with "we should use oil because the sun will burn out if we use solar panels" we know the sun is finite, but we also know there is a fuck tone of it left. It makes way more sense to go solar and stretch the oil we've got left for as absolutely long as possible. Hopefully we ween ourselves off of it for good"
+Тут думаю, мы немного друг-друга не правильно понимаем. Пожалуста почитайте и другие мои комментарии насчет этого, который писал в этой теме, вам и другим. 
+Я не говорю что должны использовать что-то одно. Либо магии, либо ресурсы. Я говорю об использование обоих, с умом(то есть зная что они ограниченны) и эффективностью.
+I'm talking about the abuse of magic))
+Below I wrote comments about this, this applies to these comments)) I believe that technology (science) + magic is much more profitable than using only magic. For example: Liana, who makes an industrial revolution with the help of the undead, that is, technology + magic (obviously, she does not use natural resources for this, like us, but magic, in what sense). It can be assumed that this may be repeated in other industries (not undead, but a symbiosis of technology and magic). 
+
+Ладно, вы сказали маны хватить на миллионы лет, если учесть только людей то 100тысяч. Давайте я тоже соглашусь с вами. 
+Только предстаете:
+Использование магии во всем делает их похожими на нас в плане использования электричества. Основное отличие этого мира в том, что он генерирует сам себя(то есть мир гененерует) , является беспроводным и универсальным. Если посмотреть на это с этой точки зрения, мана похожа на беспроводное электричество, которое хотел создать Тесла.)) и это срок(100тысяч лет/миллион) это учетом сегодняшнего их использовании магии. НО, их использовании магии будет увеличиваться каждые десятилетие в геометрическим прогрессе. То есть как у нас, увеличивался использовании электо энергии, при этом почти половина земного шара, не использует их в должней мере(заметно меньше чем современние государство).
+И оно будет продолжаться увеличиваться, потому что Назарик рано или поздно всех захватить, и улучшить их жизни.
+Только в отличие от нас они используют магии АБСОЛЮТНО везде.Может наступить время, когда они будут потреблять больше энергии, чем может генерировать мир. Пример: 
+Через 3000-5000лет :
+Потребление: 9,1 триллиона маны. 
+Генерация: 9 триллионов маны. 
+Через 7000-10000лет:
+Потребление: 20 триллиона маны. 
+Генерация: 10 триллионов маны. 
+Если они будут использовать ману повсюду, рано или поздно это произойдет.
+
+
+
+ 
