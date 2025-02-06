@@ -1,92 +1,61 @@
-import React from 'react'
-import {makeStyles} from '@mui/styles'
-import {useDispatch, useSelector} from 'react-redux'
-import ActiveSendingsItem from './sendings/ActiveSendings/ActiveSendingsItem'
-import ContainerTitle from './ContainerTitle'
-import TextRounded from './TextRounded'
-import ContentWrapper from './ContentWrapper'
-import {pauseActiveSending, setActiveSendingTimer} from '../actions/sending'
-import {ReactComponent as PauseIcon} from '../../img/pause-icon.svg'
-import SvgIconButton from './SvgIconButton'
-import {Virtuoso} from 'react-virtuoso'
-
-const useStyles = makeStyles((theme) => ({
-  divider: {
-    borderColor: theme.palette.textRounded.background
+{
+  "name": "neobis-hub",
+  "version": "0.1.0",
+  "homepage": "https://sardar-atabekov.github.io/neobis-hub/",
+  "engines": {
+    "node": "^16.14.2",
+    "npm": "^8.5.0"
   },
-  contentWrapper: {
-    padding: 0,
-    overflowY: 'scroll',
-    position: 'relative'
+  "private": true,
+  "dependencies": {
+    "@material-ui/core": "^4.11.0",
+    "@material-ui/lab": "^4.0.0-alpha.56",
+    "@sentry/browser": "^5.15.4",
+    "@testing-library/jest-dom": "^4.2.4",
+    "@testing-library/react": "^9.3.2",
+    "@testing-library/user-event": "^7.1.2",
+    "axios": "^0.21.1",
+    "bootstrap": "^4.4.1",
+    "classnames": "^2.2.6",
+    "draft-js": "^0.11.7",
+    "draftjs-to-html": "^0.9.1",
+    "interweave": "^12.5.0",
+    "moment": "^2.24.0",
+    "react": "^16.13.1",
+    "react-datepicker": "^3.1.3",
+    "react-dom": "^16.13.1",
+    "react-draft-wysiwyg": "^1.14.5",
+    "react-html-parser": "^2.0.2",
+    "react-router-dom": "^5.1.2",
+    "react-scripts": "^3.4.4",
+    "react-select": "^3.1.0",
+    "reactstrap": "^8.4.1",
+    "sweetalert2": "^9.8.2"
   },
-  headerWrapper: {
-    display: 'flex',
-    alignItems: 'center',
-    justifyContent: 'space-between',
-    paddingRight: 20
+  "scripts": {
+    "start": "react-scripts start",
+    "build": "react-scripts build",
+    "test": "react-scripts test",
+    "eject": "react-scripts eject",
+    "predeploy": "npm run build",
+    "deploy": "gh-pages -d build"
+  },
+  "eslintConfig": {
+    "extends": "react-app"
+  },
+  "browserslist": {
+    "production": [
+      ">0.2%",
+      "not dead",
+      "not op_mini all"
+    ],
+    "development": [
+      "last 1 chrome version",
+      "last 1 firefox version",
+      "last 1 safari version"
+    ]
+  },
+  "devDependencies": {
+    "gh-pages": "^4.0.0"
   }
-}))
-
-function ActiveSendings() {
-  const activeSendings = useSelector(state => state.sendings.activeSendings)
-  const isActiveSendingsPaused = useSelector(state => state.sendings.isActiveSendingsPaused)
-  const girls = useSelector(state => state.girls.girls)
-  const classes = useStyles()
-  const dispatch = useDispatch()
-
-  const getGirl = (resourceId, girlAccountId) => {
-    let girl
-    girls.forEach(item => item.validAccounts.forEach(girlAccount => {
-      if (girlAccount.id === girlAccountId) girl = girlAccount
-    }))
-    return girl
-  }
-
-  const runningActiveSendings = activeSendings.filter(item => !item.isFinished).sort((a, b) => a.resourceId - b.resourceId || a.girlAccountId - b.girlAccountId || b.startTime - a.startTime)
-
-  const handleStopSendings = () => {
-    electron.sendingApi.toggleActiveSending(true)
-    dispatch(pauseActiveSending(!isActiveSendingsPaused))
-    dispatch(setActiveSendingTimer(new Date().getTime()))
-  }
-
-  return (
-    <>
-      <div className={classes.headerWrapper}>
-        <ContainerTitle text='Active sendings' />
-        {runningActiveSendings.length > 0 && (
-          <SvgIconButton
-            tooltip='Pause sendings'
-            onClick={handleStopSendings}
-            iconComponent={PauseIcon}
-            disabled={isActiveSendingsPaused}
-          />
-        )}
-      </div>
-      <ContentWrapper divider className={classes.contentWrapper}>
-        {
-          runningActiveSendings.length > 0 ?
-            <Virtuoso
-              data={runningActiveSendings}
-              itemContent={(index, activeSendingProp) => {
-                const girl = getGirl(activeSendingProp.resourceId, activeSendingProp.girlAccountId)
-                if (!girl) return
-
-                return (
-                  <ActiveSendingsItem
-                    key={activeSendingProp.id}
-                    firstName={girl.girl.firstName}
-                    internalId={girl.internalId}
-                    activeSendingProp={activeSendingProp}
-                  />
-                )
-              }}
-            /> :
-            <TextRounded>No active sendings</TextRounded>
-        }
-      </ContentWrapper>
-    </>
-  )
 }
-
-export default ActiveSendings
